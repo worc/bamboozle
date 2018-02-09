@@ -1,0 +1,19 @@
+{
+  "name": "bamboozle",
+  "version": "0.0.0",
+  "description": "A pared-down version of @camweigert's baffle--reveal and obfuscate text not DOM!",
+  "main": "dist/bamboozle.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/worc/bamboozle.git"
+  },
+  "author": "Curtis McAllister <curtis.s.mcallister@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/worc/bamboozle/issues"
+  },
+  "homepage": "https://github.com/worc/bamboozle#readme"
+}
