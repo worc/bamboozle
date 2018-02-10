@@ -10,7 +10,7 @@ export default (array) => {
   let currentIndex = array.length, temporaryValue, randomIndex;
 
   // While there are remaining elements to shuffle
-  while (0 !== currentIndexx) {
+  while (0 !== currentIndex) {
     
     // Pick a remaining element
     randomIndex = Math.floor( Math.random() * currentIndex );
