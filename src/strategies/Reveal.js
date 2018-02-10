@@ -42,6 +42,11 @@ export default class Reveal {
       obfuscated--;
       revealed++;
 
+      // not the best guard statements, but i'm already upside down with
+      // decrementing at the beginning of the loop... oh well...
+      obfuscated = (obfuscated < 0) ? 0 : obfuscated;
+      revealed = (revealed > bitmap.length) ? bitmap.length : revealed;
+
       // a bit terse and ugly, but just building a new bitmap based on
       // our current count of obfuscated and revealed (obfuscation assumed as ones here)
       result = shuffle(Array(revealed).fill(0).concat(Array(obfuscated).fill(1)));
