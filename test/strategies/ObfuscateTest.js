@@ -1,6 +1,5 @@
 import assert from 'assert';
 import Obfuscate from '../../src/strategies/Obfuscate';
-import Reveal from "../../src/strategies/Reveal";
 
 describe('Obfuscate', () => {
     describe('#oneBitAndShuffleUntilDone', () => {
@@ -9,7 +8,7 @@ describe('Obfuscate', () => {
             let generator = Obfuscate.oneBitAndShuffleUntilDone(testArray);
             let { value, done } = generator.next();
             assert(value);
-            assert(done)
+            assert(done);
         });
 
         it('should return an empty array when given an empty array', () => {
@@ -52,6 +51,6 @@ describe('Obfuscate', () => {
             let generator = Obfuscate.leftToRightForever([1, 1, 1]);
             assert(!generator.next().done);
             assert(!generator.next().done);
-        })
-    })
+        });
+    });
 });
