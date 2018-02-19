@@ -9,8 +9,8 @@ import shuffle from '../util/Shuffle';
  * as potential infinite loops. it's a generalization or simplification that
  * cuts down on decision making in the bitmap consumer.
  *
- * loops that and and return are suffixed with UntilDone, loops that continue yielding
- * after the bitmap is full up are suffixed with Forever.
+ * functions with loops that end use a return and are suffixed with UntilDone, functions with
+ * loops that continue yielding after the bitmap is full up are suffixed with Forever.
  */
 export default class Obfuscate {
     static* oneBitAndShuffleUntilDone(bitmap = []) {
