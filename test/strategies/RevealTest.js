@@ -1,7 +1,7 @@
 import assert from 'assert';
 import Reveal from '../../src/strategies/Reveal.js';
 
-describe('Reveal', function () {
+describe('Reveal', () =>{
     describe('#oneBitAndShuffleUntilDone', () => {
         it('should return a bitmap of the same length, when all bits are zeroes', () => {
             let testArray = [0, 0, 0];
@@ -58,4 +58,3 @@ describe('Reveal', function () {
         })
     });
 });
-
