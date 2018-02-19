@@ -1,10 +1,11 @@
 export default class Bamboozle {
     constructor(
         listener = (message) => { console.warn('no listener given for message:', message) },
+        resolution = '',
         {
             characters = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()-+=[]{}|;:,./<>?',
             exclude = ' ',
-            startBaffled = true,
+            // startBaffled = true,
             speed = 50,
         }
     ) {
