@@ -76,4 +76,24 @@ export default class Obfuscate {
             yield result;
         }
     }
+
+    static* leftToRightUntilDone(bitmap = []) {
+        for (let i = 0; i < bitmap.length; i++) {
+            bitmap[i] = 1;
+
+            if (bitmap.includes(0)) {
+                yield bitmap;
+            } else {
+                return bitmap;
+            }
+        }
+    }
+
+    static* leftToRightForever(bitmap = []) {
+        for (let i = 0; i < bitmap.length; i++) {
+            bitmap[i] = 1;
+
+            yield bitmap;
+        }
+    }
 }

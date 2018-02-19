@@ -1,5 +1,6 @@
 import assert from 'assert';
 import Obfuscate from '../../src/strategies/Obfuscate';
+import Reveal from "../../src/strategies/Reveal";
 
 describe('Obfuscate', () => {
     describe('#oneBitAndShuffleUntilDone', () => {
@@ -33,4 +34,24 @@ describe('Obfuscate', () => {
             assert(!generator.next().done);
         });
     });
+
+    describe('#leftToRightUntilDone', () => {
+        it('should yield an array at each step even when the bit for that step is already obfuscated', () => {
+            let generator = Obfuscate.leftToRightUntilDone([1, 0, 0]);
+            assert(generator.next().value.join('') === [1, 0, 0].join(''));
+        });
+
+        it('should return if all values are already ones', () => {
+            let generator = Obfuscate.leftToRightUntilDone([1, 1, 1]);
+            assert(generator.next().done);
+        });
+    });
+
+    describe('#leftToRightForever', () => {
+        it('should yield even when all values are already ones', () => {
+            let generator = Obfuscate.leftToRightForever([1, 1, 1]);
+            assert(!generator.next().done);
+            assert(!generator.next().done);
+        })
+    })
 });
