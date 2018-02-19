@@ -23,6 +23,14 @@ describe('Obfuscate', () => {
             assert(generator.next().value.join('').match(/1/g).length === 1, 'first yield with 1 ones');
             assert(generator.next().value.join('').match(/1/g).length === 2, 'second yield with 2 ones');
             assert(generator.next().value.join('').match(/1/g).length === 3, 'third and last return with 3 ones');
-        })
+        });
+    });
+
+    describe('#oneBitAndShuffleForever', () => {
+        it('should not be done even when all bits are ones', () => {
+            let generator = Obfuscate.oneBitAndShuffleForever([1]);
+            assert(!generator.next().done);
+            assert(!generator.next().done);
+        });
     });
 });

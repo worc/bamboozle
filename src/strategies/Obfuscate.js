@@ -46,4 +46,34 @@ export default class Obfuscate {
             }
         }
     }
+
+    static* oneBitAndShuffleForever(bitmap = []) {
+        let result = [];
+        let revealed = 0;
+        let obfuscated = 0;
+
+        bitmap.forEach(bit => {
+            if(bit) {
+                obfuscated++;
+            } else {
+                revealed++;
+            }
+        });
+
+        while(bitmap) {
+            // step
+            obfuscated++;
+            revealed--;
+
+            // guard
+            obfuscated = (obfuscated > bitmap.length) ? bitmap.length : obfuscated;
+            revealed = (revealed < 0) ? 0 : revealed;
+
+            // resolve
+            result = shuffle(Array(revealed).fill(0).concat(Array(obfuscated).fill(1)));
+
+            // yield
+            yield result;
+        }
+    }
 }
