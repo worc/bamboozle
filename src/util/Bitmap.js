@@ -9,6 +9,17 @@ export default class Bitmap /*extends Array*/ {
         this.characterGenerator = ShuffledDeckGenerator(characters.split(''));
     }
 
+    setOptions({ exclude, characters }) {
+        this.exclude = exclude;
+        this.characterGenerator = ShuffledDeckGenerator(characters.split(''));
+    }
+
+    // can't really do operator overloading, so this will stay in use
+    // even after the jump to babel 7 when we'll extend Array
+    setBitmap(bitmap = []) {
+        this.array = bitmap;
+    }
+
     /*
      * we're stuck aliasing the usual API calls to a local array
      * instead of just extending the array prototype...
