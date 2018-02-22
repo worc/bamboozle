@@ -96,4 +96,8 @@ export default class Obfuscate {
             yield bitmap;
         }
     }
+
+    static* all(bitmap = []) {
+        return bitmap.fill(1);
+    }
 }
