@@ -8,12 +8,24 @@ export default class TaskRunner {
         this.interval = () => {};
     }
 
-    add(strategy, speed = this.options.speed, duration, delay) {
+    add(strategy, duration, delay, speed = this.options.speed) {
         this.queue.push({ strategy, speed, duration, delay });
 
         if(!this.running) {
             this.run(this.queue.shift());
         }
+    }
+
+    addLoop(strategy, duration, delay, speed) {
+        this.queue.push({ strategy, duration, delay, speed });
+
+        if(!this.running) {
+            this.run(this.queue.shift());
+        }
+    }
+
+    addSingleRun(strategy, delay, speed) {
+        this.add(strategy, false, delay, speed);
     }
 
     run({ speed, strategy, duration, delay = 0 }) {
