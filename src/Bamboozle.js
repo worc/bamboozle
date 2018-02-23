@@ -30,7 +30,7 @@ export default class Bamboozle {
     }
 
     once() {
-        this.taskRunner.add(Obfuscate.all)
+        this.taskRunner.addSingleRun(Obfuscate.all)
     }
 
     start() {
