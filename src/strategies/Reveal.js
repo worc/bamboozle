@@ -1,4 +1,5 @@
 import shuffle from '../util/Shuffle';
+import Bitmap from '../util/Bitmap';
 
 /**
  * all of the static generators take an array of zero or more length as an argument
@@ -61,19 +62,75 @@ export default class Reveal {
         }
     }
 
-    static* leftToRight(bitmap = []) {
-        for (let i = 0; i < bitmap.length; i++) {
-            bitmap[i] = 0;
+    static* leftToRight(bitmap = Bitmap) {
+        // cloning the array since native class extensions don't
+        // work right now, i'm sure this is cleaner in babel 7
+        let result = bitmap.concat([]);
+
+        for (let i = 0; i < result.length; i++) {
+            result[i] = 0;
 
             if (bitmap.includes(1)) {
-                yield bitmap;
+                yield result;
             } else {
-                return bitmap;
+                return result;
             }
         }
 
         // zero-length fallthrough:
-        return bitmap;
+        return result;
+    }
+
+    // todo remove .array access after updating to babel 7
+    static* rightToLeft(bitmap = []) {
+        // cloning the array since native class extensions don't
+        // work right now, i'm sure this is cleaner in babel 7
+        let result = bitmap.concat([]);
+
+        for(let i = result.length - 1; i > - 1; i--) {
+            result[i] = 0;
+            if(result.includes(1)) {
+                yield result;
+            } else {
+                return result;
+            }
+        }
+    }
+
+    static* insideToOutside(bitmap) {
+        let result = bitmap.concat([]);
+        let centerIndex = Math.floor(result.length / 2);
+        let centerLeftIndex = centerIndex - 1;
+
+        if (result.length % 2 === 0) {
+            for(let i = 0; i <= centerIndex; i++) {
+                result[centerIndex] = 0;
+                result[centerIndex + i] = 0;
+
+                result[centerLeftIndex] = 0;
+                result[centerLeftIndex - i] = 0;
+
+                if(result.includes(1)) {
+                    yield result;
+                } else {
+                    return result;
+                }
+
+            }
+
+        } else {
+            for(let i = 0; i <= centerIndex; i++) {
+                result[centerIndex] = 0;
+                result[centerIndex + i] = 0;
+                result[centerIndex - i] = 0;
+
+                if(result.includes(1)) {
+                    yield result;
+                } else {
+                    return result;
+                }
+            }
+        }
     }
 
     static* outsideToInside(bitmap) {

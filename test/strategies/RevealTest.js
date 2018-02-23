@@ -55,7 +55,33 @@ describe('Reveal', () =>{
             let { value, done } = generator.next();
             assert(value);
             assert(done);
-        })
+        });
+    });
+
+    describe('#insideToOutside', () => {
+       it('should flip bits from the center index towards the edges for odd-length arrays', () => {
+           let testArray = [1, 1, 1];
+           let generator = Reveal.insideToOutside(testArray);
+           let value, done;
+           ({ value } = generator.next());
+           assert(value.join('') === [1, 0, 1].join(''));
+
+           ( { value, done } = generator.next() );
+           assert(value.join('') === [0, 0, 0].join(''));
+           assert(done);
+       });
+
+       it('should flip bits from center two indices towards the edges for even-length arrays', () => {
+           let testArray = [1, 1, 1, 1];
+           let generator = Reveal.insideToOutside(testArray);
+           let value, done;
+           ({ value } = generator.next());
+           assert(value.join('') === [1, 0, 0, 1].join(''));
+
+           ({ value, done } = generator.next());
+           assert(value.join('') === [0, 0, 0, 0].join(''));
+           assert(done);
+       });
     });
 
     describe('#outsideToInside', () => {
