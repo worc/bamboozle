@@ -64,7 +64,7 @@ export default class TaskRunner {
     stop() {
         clearInterval(this.interval);
         this.running = false;
-        // this.queue = [] ? which would imply a pause function
+        this.queue = [];
         // that doesn't wipe out the queue
     }
 }

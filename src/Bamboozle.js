@@ -54,6 +54,8 @@ export default class Bamboozle {
     }
 
     reveal(duration = 0, delay) {
+        this.stop();
+
         // calculate the speed needed to complete a full reveal on time
         let speed = (this.bitmap.resolution.length > 0 && duration > 0) ? duration / this.bitmap.resolution.length : this.options.speed;
 
