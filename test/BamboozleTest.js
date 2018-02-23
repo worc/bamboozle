@@ -17,6 +17,13 @@ describe('Bamboozle', () => {
             assert(bam.options.exclude === ' ');
             assert(bam.options.characters === 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()-+=[]{}|;:,./<>?');
         });
+
+        it('should message the listener with the initial state', (done) => {
+            new Bamboozle(message => {
+                assert(message === resolution);
+                done();
+            }, resolution, { startBaffled: false });
+        })
     });
 
     describe('#once', () => {
