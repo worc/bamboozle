@@ -8,32 +8,28 @@ export default class TaskRunner {
         this.interval = () => {};
     }
 
-    add(strategy, duration, delay, speed = this.options.speed) {
-        this.queue.push({ strategy, speed, duration, delay });
+    add(strategyGenerator, duration = 0, delay = 0, speed = this.options.speed) {
+        this.queue.push({ strategyGenerator, duration, delay, speed });
 
         if(!this.running) {
             this.run(this.queue.shift());
         }
     }
 
-    addLoop(strategy, duration, delay, speed) {
-        this.queue.push({ strategy, duration, delay, speed });
-
-        if(!this.running) {
-            this.run(this.queue.shift());
-        }
+    addLoop(strategyGenerator, duration, delay, speed) {
+        this.add(strategyGenerator, duration, delay, speed);
     }
 
-    addSingleRun(strategy, delay, speed) {
-        this.add(strategy, false, delay, speed);
+    addSingleRun(strategyGenerator, delay, speed) {
+        this.add(strategyGenerator, false, delay, speed);
     }
 
-    run({ speed, strategy, duration, delay = 0 }) {
+    run({ strategyGenerator, duration, delay, speed }) {
         this.running = true;
         clearInterval(this.interval);
 
         setTimeout(() => {
-            this.strategy = strategy(this.bitmap);
+            this.strategy = strategyGenerator(this.bitmap);
             this.interval = setInterval(this.step.bind(this), speed);
 
             if(duration) {
