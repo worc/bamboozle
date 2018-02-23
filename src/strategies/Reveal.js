@@ -75,5 +75,21 @@ export default class Reveal {
         // zero-length fallthrough:
         return bitmap;
     }
+
+    static* outsideToInside(bitmap) {
+        let result = bitmap.concat([]);
+        let centerIndex = Math.floor(result.length / 2);
+
+        for(let i = 0; i <= centerIndex; i++) {
+            result[i] = 0;
+            result[result.length - 1 - i] = 0;
+
+            if(result.includes(1)) {
+                yield result;
+            } else {
+                return result;
+            }
+        }
+    }
 }
 
