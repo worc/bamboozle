@@ -11,8 +11,8 @@ describe('Bamboozle', () => {
         });
 
         it('should take a sparse options argument and fill-in with defaults', () => {
-            let bam = new Bamboozle(() => {}, resolution, { speed: 100 });
-            assert(bam.options.speed === 100);
+            let bam = new Bamboozle(() => {}, resolution, { frequency: 100 });
+            assert(bam.options.frequency === 100);
             assert(bam.options.startBaffled === true);
             assert(bam.options.exclude === ' ');
             assert(bam.options.characters === 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()-+=[]{}|;:,./<>?');
@@ -23,15 +23,31 @@ describe('Bamboozle', () => {
                 assert(message === resolution);
                 done();
             }, resolution, { startBaffled: false });
-        })
+        });
+
+        it('should message the listener with the initial baffled state', (done) => {
+            new Bamboozle(message => {
+                //                 'hello world!'
+                assert(message === '***** ******');
+                done();
+            }, resolution, { startBaffled: true, characters: '*' });
+        });
     });
 
     describe('#once', () => {
         it('should send the listener a fully obfuscated message', (done) => {
+            let count = 0;
             let bam = new Bamboozle(message => {
-                //                 'hello world!'
-                assert(message === '***** ******');
-                done();
+                count++;
+                if(count === 1) {
+                    // initialization is without baffling
+                    assert(message === 'hello world!');
+                } else if (count === 2) {
+                    // but calling .once() triggers another message, this time baffled:
+                    //                 'hello world!'
+                    assert(message === '***** ******');
+                    done();
+                }
             }, resolution, { startBaffled: false, characters: '*' });
 
             bam.once();
@@ -54,6 +70,31 @@ describe('Bamboozle', () => {
 
             bam.start();
         });
+
+        it('causes an infinite loop if bam.taskRunner.stop() runs taskRunner.updateListener, and that listener in turn calls .stop() :/ my bad'
+            // , () => {
+            // let count = 0;
+            // let bam = new Bamboozle(message => {
+            //     console.log('recursion count', count);
+            //     count++;
+            //     assert(!message.includes('*'));
+            //
+            //     if(count === 2) {
+            //         // this call initiates an infinite loop
+            //         // currently at a deep level TaskRunner calls updateListener,
+            //         // and this is that function... so we have .stop() => .updateListener() => .stop(), until stackoverflow
+            //         bam.stop();
+            //     }
+            //
+            //     if(count > 100) {
+            //         // okay, we've proved our point, time to bail
+            //         done();
+            //     }
+            // }, '*****', { characters: '!@#'});
+            //
+            // bam.start();
+        // }
+        );
     });
 
     describe('#set', () => {
@@ -79,20 +120,27 @@ describe('Bamboozle', () => {
             let shortMessage = '1234';
             let duration = 400; // milliseconds to spend revealing
             let startTime = new Date();
+            let count = 0;
 
             let bam = new Bamboozle(message => {
-                let runTime = new Date() - startTime;
-                assert(
-                    // 4 characters revealed over 400ms should be
-                    // about 100ms per loop, or twice the time as default
-                    runTime > 90 && runTime < 110,
-                    'reveal should send out an update about every 100 milliseconds'
-                );
+                // skip initial message from constructor
+                if(count > 0) {
+                    let runTime = new Date() - startTime;
+                    assert(
+                        // 4 characters revealed over 400ms should be
+                        // about 100ms per loop, or twice the time as default
+                        runTime > 90 && runTime < 110,
+                        'reveal should send out an update about every 100 milliseconds'
+                    );
 
-                if(message === '1234') {
-                    done();
+                    if(message === '1234') {
+                        done();
+                    } else {
+                        startTime = new Date();
+                    }
+
                 } else {
-                    startTime = new Date();
+                    count++;
                 }
 
             }, shortMessage);
@@ -104,20 +152,26 @@ describe('Bamboozle', () => {
             let longMessage = '1234567890';
             let duration = 250;
             let startTime = new Date();
+            let count = 0;
 
             let bam = new Bamboozle(message => {
-                let runTime = new Date() - startTime;
-                assert(
-                       // 10 characters revealed over 250ms should be
-                    // about 25ms per loop, or half the time of the default
-                    runTime > 20 && runTime < 30,
-                    'reveal should send out an update about every 25 milliseconds'
-                );
+                // skip initial message on initialization
+                if(count > 0) {
+                    let runTime = new Date() - startTime;
+                    assert(
+                        // 10 characters revealed over 250ms should be
+                        // about 25ms per loop, or half the time of the default
+                        runTime > 20 && runTime < 30,
+                        'reveal should send out an update about every 25 milliseconds'
+                    );
 
-                if(message === '1234567890') {
-                    done();
+                    if(message === '1234567890') {
+                        done();
+                    } else {
+                        startTime = new Date();
+                    }
                 } else {
-                    startTime = new Date();
+                    count++;
                 }
             }, longMessage);
 
