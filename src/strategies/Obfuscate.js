@@ -13,7 +13,7 @@ import shuffle from '../util/Shuffle';
  * loops that continue yielding after the bitmap is full up are suffixed with Forever.
  */
 export default class Obfuscate {
-    static* oneBitAndShuffleUntilDone(bitmap = []) {
+    static* oneBitAndShuffleUntilDone(bitmap) {
         let result = [];
         let revealed = 0;
         let obfuscated = 0;
@@ -47,7 +47,7 @@ export default class Obfuscate {
         }
     }
 
-    static* oneBitAndShuffleForever(bitmap = []) {
+    static* oneBitAndShuffleForever(bitmap) {
         let result = [];
         let revealed = 0;
         let obfuscated = 0;
@@ -77,23 +77,153 @@ export default class Obfuscate {
         }
     }
 
-    static* leftToRightUntilDone(bitmap = []) {
-        for (let i = 0; i < bitmap.length; i++) {
-            bitmap[i] = 1;
+    static* leftToRightUntilDone(bitmap) {
+        let result = bitmap.concat([]);
 
-            if (bitmap.includes(0)) {
-                yield bitmap;
+        for (let i = 0; i < result.length; i++) {
+            result[i] = 1;
+
+            if (result.includes(0)) {
+                yield result;
             } else {
-                return bitmap;
+                return result;
             }
         }
     }
 
-    static* leftToRightForever(bitmap = []) {
-        for (let i = 0; i < bitmap.length; i++) {
-            bitmap[i] = 1;
+    static* leftToRightForever(bitmap) {
+        let result = bitmap.concat([]);
 
+        for (let i = 0; i < result.length; i++) {
+            result[i] = 1;
+
+            yield result;
+        }
+    }
+
+    static* rightToLeftUntilDone(bitmap) {
+        let result = bitmap.concat([]);
+
+        for (let i = result.length - 1; i > - 1; i--) {
+            result[i] = 1;
+
+            if(result.includes(0)) {
+                yield result;
+            } else {
+                return result;
+            }
+        }
+    }
+
+    static* rightToLeftForever(bitmap) {
+        let result = bitmap.concat([]);
+
+        for (let i = result.length - 1; i > - 1; i--) {
+            result[i] = 1;
+            yield result;
+        }
+
+        while(result) {
+            yield result;
+        }
+    }
+
+    static* insideToOutsideUntilDone(bitmap) {
+        let result = bitmap.concat([]);
+        let centerIndex = Math.floor(result.length / 2);
+        let centerLeftIndex = centerIndex - 1;
+
+        if (result.length % 2 === 0) {
+            for(let i = 0; i <= centerIndex; i++) {
+                result[centerIndex] = 1;
+                result[centerIndex + i] = 1;
+
+                result[centerLeftIndex] = 1;
+                result[centerLeftIndex - i] = 1;
+
+                if(result.includes(0)) {
+                    yield result;
+                } else {
+                    return result;
+                }
+
+            }
+
+        } else {
+            for(let i = 0; i <= centerIndex; i++) {
+                result[centerIndex] = 1;
+                result[centerIndex + i] = 1;
+                result[centerIndex - i] = 1;
+
+                if(result.includes(0)) {
+                    yield result;
+                } else {
+                    return result;
+                }
+            }
+        }
+    }
+
+    static* insideToOutsideForever(bitmap) {
+        let result = bitmap.concat([]);
+        let centerIndex = Math.floor(result.length / 2);
+        let centerLeftIndex = centerIndex - 1;
+
+        if (result.length % 2 === 0) {
+            for(let i = 0; i <= centerIndex; i++) {
+                result[centerIndex] = 1;
+                result[centerIndex + i] = 1;
+
+                result[centerLeftIndex] = 1;
+                result[centerLeftIndex - i] = 1;
+
+                yield result;
+
+            }
+        } else {
+            for(let i = 0; i <= centerIndex; i++) {
+                result[centerIndex] = 1;
+                result[centerIndex + i] = 1;
+                result[centerIndex - i] = 1;
+
+                yield result;
+            }
+        }
+
+        while(bitmap) {
+            yield result;
+        }
+    }
+
+    static* outsideToInsideForever(bitmap) {
+        let result = bitmap.concat([]);
+        let centerIndex = Math.floor(result.length / 2);
+
+        for(let i = 0; i <= centerIndex; i++) {
+            result[i] = 1;
+            result[result.length - 1 - i] = 1;
+
+            yield result;
+        }
+
+        while(bitmap) {
             yield bitmap;
+        }
+    }
+
+    static* outsideToInsideUntilDone(bitmap) {
+        let result = bitmap.concat([]);
+        let centerIndex = Math.floor(result.length / 2);
+
+        for(let i = 0; i <= centerIndex; i++) {
+            result[i] = 1;
+            result[result.length - 1 - i] = 1;
+
+            if(result.includes(0)) {
+                yield result;
+            } else {
+                return result;
+            }
         }
     }
 
