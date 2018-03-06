@@ -12,11 +12,46 @@
     </head>
 
     <body>
-        <div id="output"></div>
+        <section>
+            <h2>basic controls</h2>
+            <div id="output"></div>
+            <div id="basic-queue"></div>
+            <button id="start">start</button>
+            <button id="stop">stop</button>
+            <button id="reveal">reveal</button>
+            <input id="basic-frequency" type="range" min="1" max="100" step="1">
+        </section>
 
-        <button id="start">start</button>
-        <button id="stop">stop</button>
-        <button id="reveal">reveal</button>
+        <section>
+            <h2>special strategies</h2>
+            <div id="special"></div>
+            <div id="special-controls">
+                <h3>reveal</h3>
+                <button id="r-ltr">left to right</button>
+                <button id="r-rtl">right to left</button>
+                <button id="r-ito">inside to outside</button>
+                <button id="r-oti">outside to inside</button>
+                <h3>obfuscate</h3>
+                <button id="o-ltr">left to right</button>
+                <button id="o-rtl">right to left</button>
+                <button id="o-ito">inside to outside</button>
+                <button id="o-oti">outside to inside</button>
+                <!--<datalist id="milliseconds">-->
+                    <!--<option value="100" label="100ms">-->
+                    <!--<option value="200">-->
+                    <!--<option value="300">-->
+                    <!--<option value="400">-->
+                    <!--<option value="500" label="500ms">-->
+                    <!--<option value="600">-->
+                    <!--<option value="700">-->
+                    <!--<option value="800">-->
+                    <!--<option value="900">-->
+                    <!--<option value="1000" label="1000ms">-->
+                <!--</datalist>-->
+
+            </div>
+
+        </section>
 
 
     </body>

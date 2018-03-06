@@ -60,69 +60,19 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 63);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
+var core = module.exports = { version: '2.5.3' };
+if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
-
-exports.__esModule = true;
-
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _defineProperty = __webpack_require__(44);
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(6)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -134,119 +84,30 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-var core = module.exports = { version: '2.5.3' };
-if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
-
-
-/***/ }),
-/* 7 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(49);
+var store = __webpack_require__(30)('wks');
+var uid = __webpack_require__(20);
+var Symbol = __webpack_require__(1).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
 
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-/**
-  * from stackoverflow: "How to randomize (shuffle) a JavaScriptArray?"
-  * https://stackoverflow.com/q/2450954/769780
-  * 
-  * "The de-facto unbiased shuffle algorithm..." 
-  * https://stackoverflow.com/a/2450976/769780
-  */
-
-exports.default = function (array) {
-  var currentIndex = array.length,
-      temporaryValue = void 0,
-      randomIndex = void 0;
-
-  // While there are remaining elements to shuffle
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
 };
 
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
+$exports.store = store;
 
-"use strict";
-
-
-exports.__esModule = true;
-
-var _assign = __webpack_require__(18);
-
-var _assign2 = _interopRequireDefault(_assign);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _assign2.default || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
 
 /***/ }),
-/* 10 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(3);
-var core = __webpack_require__(4);
-var ctx = __webpack_require__(21);
-var hide = __webpack_require__(23);
+var global = __webpack_require__(1);
+var core = __webpack_require__(0);
+var ctx = __webpack_require__(14);
+var hide = __webpack_require__(8);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -307,15 +168,26 @@ module.exports = $export;
 
 
 /***/ }),
-/* 11 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(24);
-var IE8_DOM_DEFINE = __webpack_require__(25);
-var toPrimitive = __webpack_require__(27);
+var isObject = __webpack_require__(6);
+module.exports = function (it) {
+  if (!isObject(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(4);
+var IE8_DOM_DEFINE = __webpack_require__(40);
+var toPrimitive = __webpack_require__(26);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(2) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(7) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -329,251 +201,127 @@ exports.f = __webpack_require__(2) ? Object.defineProperty : function defineProp
 
 
 /***/ }),
-/* 12 */
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(10)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP = __webpack_require__(5);
+var createDesc = __webpack_require__(18);
+module.exports = __webpack_require__(7) ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(13);
-var defined = __webpack_require__(14);
+var IObject = __webpack_require__(42);
+var defined = __webpack_require__(27);
 module.exports = function (it) {
   return IObject(defined(it));
 };
 
 
 /***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+exports.default = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+/***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(33);
-// eslint-disable-next-line no-prototype-builtins
-module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-  return cof(it) == 'String' ? it.split('') : Object(it);
-};
+"use strict";
 
+
+exports.__esModule = true;
+
+var _defineProperty = __webpack_require__(71);
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports) {
-
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-// 7.1.4 ToInteger
-var ceil = Math.ceil;
-var floor = Math.floor;
-module.exports = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _Bamboozle = __webpack_require__(17);
-
-var _Bamboozle2 = _interopRequireDefault(_Bamboozle);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var pangram = 'Pack my box with five dozen liquor jugs.';
-var options = {
-    characters: ['▀▁▂▃▄▅▆▇█▉▊▋▌▍▎', // U+258x
-    '▐░▒▓▔▕▖▗▘▙▚▛▜▝▞▟'].join(''),
-    exclude: '. '
-};
-var target = document.getElementById('output');
-
-document.getElementById('start').addEventListener('click', function () {
-    bam.start();
-});
-
-document.getElementById('stop').addEventListener('click', function () {
-    bam.stop();
-});
-
-document.getElementById('reveal').addEventListener('click', function () {
-    bam.reveal();
-});
-
-var bam = new _Bamboozle2.default(function (message) {
-    target.textContent = message;
-}, pangram, options);
-
-bam.start();
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _extends2 = __webpack_require__(9);
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-var _classCallCheck2 = __webpack_require__(0);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(1);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _Bitmap = __webpack_require__(47);
-
-var _Bitmap2 = _interopRequireDefault(_Bitmap);
-
-var _TaskRunner = __webpack_require__(51);
-
-var _TaskRunner2 = _interopRequireDefault(_TaskRunner);
-
-var _Obfuscate = __webpack_require__(52);
-
-var _Obfuscate2 = _interopRequireDefault(_Obfuscate);
-
-var _Reveal = __webpack_require__(53);
-
-var _Reveal2 = _interopRequireDefault(_Reveal);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Bamboozle = function () {
-    function Bamboozle() {
-        var listener = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (message) {
-            console.warn('no listener given for message:', message);
-        };
-        var resolution = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-        var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-            _ref$characters = _ref.characters,
-            characters = _ref$characters === undefined ? 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()-+=[]{}|;:,./<>?' : _ref$characters,
-            _ref$exclude = _ref.exclude,
-            exclude = _ref$exclude === undefined ? ' ' : _ref$exclude,
-            _ref$startBaffled = _ref.startBaffled,
-            startBaffled = _ref$startBaffled === undefined ? true : _ref$startBaffled,
-            _ref$speed = _ref.speed,
-            speed = _ref$speed === undefined ? 50 : _ref$speed;
-
-        (0, _classCallCheck3.default)(this, Bamboozle);
-
-        this.options = {
-            characters: characters,
-            exclude: exclude,
-            startBaffled: startBaffled,
-            speed: speed
-        };
-        this.bitmap = new _Bitmap2.default(resolution, this.options.exclude, this.options.characters);
-        this.bitmap.fill(this.options.startBaffled ? 1 : 0);
-        this.taskRunner = new _TaskRunner2.default(this.bitmap, this.options, listener);
-
-        this.obfuscationStrategy = _Obfuscate2.default.oneBitAndShuffleForever;
-        this.revealStrategy = _Reveal2.default.oneBitAndShuffleUntilDone;
-    }
-
-    (0, _createClass3.default)(Bamboozle, [{
-        key: 'once',
-        value: function once() {
-            this.taskRunner.add(_Obfuscate2.default.all);
-        }
-    }, {
-        key: 'start',
-        value: function start() {
-            this.taskRunner.addLoop(this.obfuscationStrategy);
-        }
-    }, {
-        key: 'stop',
-        value: function stop() {
-            this.taskRunner.stop();
-        }
-    }, {
-        key: 'set',
-        value: function set(options) {
-            this.options = (0, _extends3.default)({}, this.options, options);
-            this.bitmap.setOptions({
-                exclude: this.options.exclude,
-                characters: this.options.characters
-            });
-        }
-    }, {
-        key: 'text',
-        value: function text() {
-            var fn = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
-        }
-    }, {
-        key: 'reveal',
-        value: function reveal() {
-            var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-            var delay = arguments[1];
-
-            this.stop();
-
-            // calculate the speed needed to complete a full reveal on time
-            var speed = this.bitmap.resolution.length > 0 && duration > 0 ? duration / this.bitmap.resolution.length : this.options.speed;
-
-            // todo, definitely change the term to "pace" or something because that inequality check looks
-            // todo, and sounds backwards when you read it out loud...
-            // todo change speed to tempo and invert (1/tempo) at a deeper the term so that it reads better at this higher level
-            // let clampedSpeed = (speed > this.options.speed) ? this.options.speed : speed;
-
-            // duration sent to task runner is 0 or falsy so that no matter what the reveal
-            // will complete, either at a pace set to match the requested duration or
-            // at the default speed in options
-            this.taskRunner.addSingleRun(this.revealStrategy, delay, speed);
-        }
-    }]);
-    return Bamboozle;
-}();
-
-exports.default = Bamboozle;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(19), __esModule: true };
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(20);
-module.exports = __webpack_require__(4).Object.assign;
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(10);
-
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(29) });
-
-
-/***/ }),
-/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(22);
+var aFunction = __webpack_require__(17);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -595,7 +343,25 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 22 */
+/* 15 */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -605,72 +371,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(11);
-var createDesc = __webpack_require__(28);
-module.exports = __webpack_require__(2) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(5);
-module.exports = function (it) {
-  if (!isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = !__webpack_require__(2) && !__webpack_require__(6)(function () {
-  return Object.defineProperty(__webpack_require__(26)('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(5);
-var document = __webpack_require__(3).document;
-// typeof document.createElement is 'object' in old IE
-var is = isObject(document) && isObject(document.createElement);
-module.exports = function (it) {
-  return is ? document.createElement(it) : {};
-};
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(5);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-/* 28 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -684,53 +385,12 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// 19.1.2.1 Object.assign(target, source, ...)
-var getKeys = __webpack_require__(30);
-var gOPS = __webpack_require__(41);
-var pIE = __webpack_require__(42);
-var toObject = __webpack_require__(43);
-var IObject = __webpack_require__(13);
-var $assign = Object.assign;
-
-// should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(6)(function () {
-  var A = {};
-  var B = {};
-  // eslint-disable-next-line no-undef
-  var S = Symbol();
-  var K = 'abcdefghijklmnopqrst';
-  A[S] = 7;
-  K.split('').forEach(function (k) { B[k] = k; });
-  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
-}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
-  var T = toObject(target);
-  var aLen = arguments.length;
-  var index = 1;
-  var getSymbols = gOPS.f;
-  var isEnum = pIE.f;
-  while (aLen > index) {
-    var S = IObject(arguments[index++]);
-    var keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S);
-    var length = keys.length;
-    var j = 0;
-    var key;
-    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
-  } return T;
-} : $assign;
-
-
-/***/ }),
-/* 30 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(31);
-var enumBugKeys = __webpack_require__(40);
+var $keys = __webpack_require__(41);
+var enumBugKeys = __webpack_require__(31);
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
@@ -738,13 +398,439 @@ module.exports = Object.keys || function keys(O) {
 
 
 /***/ }),
-/* 31 */
+/* 20 */
+/***/ (function(module, exports) {
+
+var id = 0;
+var px = Math.random();
+module.exports = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+exports.f = {}.propertyIsEnumerable;
+
+
+/***/ }),
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(32);
-var toIObject = __webpack_require__(12);
-var arrayIndexOf = __webpack_require__(34)(false);
-var IE_PROTO = __webpack_require__(37)('IE_PROTO');
+module.exports = __webpack_require__(75);
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = true;
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var def = __webpack_require__(5).f;
+var has = __webpack_require__(9);
+var TAG = __webpack_require__(2)('toStringTag');
+
+module.exports = function (it, tag, stat) {
+  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
+};
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(6);
+var document = __webpack_require__(1).document;
+// typeof document.createElement is 'object' in old IE
+var is = isObject(document) && isObject(document.createElement);
+module.exports = function (it) {
+  return is ? document.createElement(it) : {};
+};
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(6);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+// 7.1.4 ToInteger
+var ceil = Math.ceil;
+var floor = Math.floor;
+module.exports = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var shared = __webpack_require__(30)('keys');
+var uid = __webpack_require__(20);
+module.exports = function (key) {
+  return shared[key] || (shared[key] = uid(key));
+};
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(1);
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || (global[SHARED] = {});
+module.exports = function (key) {
+  return store[key] || (store[key] = {});
+};
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+// IE 8- don't enum bug keys
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+exports.f = Object.getOwnPropertySymbols;
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.13 ToObject(argument)
+var defined = __webpack_require__(27);
+module.exports = function (it) {
+  return Object(defined(it));
+};
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/**
+  * from stackoverflow: "How to randomize (shuffle) a JavaScriptArray?"
+  * https://stackoverflow.com/q/2450954/769780
+  * 
+  * "The de-facto unbiased shuffle algorithm..." 
+  * https://stackoverflow.com/a/2450976/769780
+  */
+
+exports.default = function (array) {
+  var currentIndex = array.length,
+      temporaryValue = void 0,
+      randomIndex = void 0;
+
+  // While there are remaining elements to shuffle
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject = __webpack_require__(4);
+var dPs = __webpack_require__(82);
+var enumBugKeys = __webpack_require__(31);
+var IE_PROTO = __webpack_require__(29)('IE_PROTO');
+var Empty = function () { /* empty */ };
+var PROTOTYPE = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = __webpack_require__(25)('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(50).appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// 25.4.1.5 NewPromiseCapability(C)
+var aFunction = __webpack_require__(17);
+
+function PromiseCapability(C) {
+  var resolve, reject;
+  this.promise = new C(function ($$resolve, $$reject) {
+    if (resolve !== undefined || reject !== undefined) throw TypeError('Bad Promise constructor');
+    resolve = $$resolve;
+    reject = $$reject;
+  });
+  this.resolve = aFunction(resolve);
+  this.reject = aFunction(reject);
+}
+
+module.exports.f = function (C) {
+  return new PromiseCapability(C);
+};
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports.f = __webpack_require__(2);
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(1);
+var core = __webpack_require__(0);
+var LIBRARY = __webpack_require__(23);
+var wksExt = __webpack_require__(37);
+var defineProperty = __webpack_require__(5).f;
+module.exports = function (name) {
+  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
+  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
+};
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends2 = __webpack_require__(64);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _classCallCheck2 = __webpack_require__(12);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(13);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _Bitmap = __webpack_require__(44);
+
+var _Bitmap2 = _interopRequireDefault(_Bitmap);
+
+var _TaskRunner = __webpack_require__(77);
+
+var _TaskRunner2 = _interopRequireDefault(_TaskRunner);
+
+var _Obfuscate = __webpack_require__(58);
+
+var _Obfuscate2 = _interopRequireDefault(_Obfuscate);
+
+var _Reveal = __webpack_require__(59);
+
+var _Reveal2 = _interopRequireDefault(_Reveal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Bamboozle = function () {
+    function Bamboozle() {
+        var listener = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (message) {
+            console.warn('no listener given for message:', message);
+        };
+        var resolution = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+        var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+            _ref$characters = _ref.characters,
+            characters = _ref$characters === undefined ? 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()-+=[]{}|;:,./<>?' : _ref$characters,
+            _ref$exclude = _ref.exclude,
+            exclude = _ref$exclude === undefined ? ' ' : _ref$exclude,
+            _ref$startBaffled = _ref.startBaffled,
+            startBaffled = _ref$startBaffled === undefined ? true : _ref$startBaffled,
+            _ref$frequency = _ref.frequency,
+            frequency = _ref$frequency === undefined ? 20 : _ref$frequency;
+
+        (0, _classCallCheck3.default)(this, Bamboozle);
+
+        this.options = {
+            characters: characters,
+            exclude: exclude,
+            startBaffled: startBaffled,
+            frequency: frequency
+        };
+        this.bitmap = new _Bitmap2.default(resolution, this.options.exclude, this.options.characters);
+        this.bitmap.fill(this.options.startBaffled ? 1 : 0);
+        this.taskRunner = new _TaskRunner2.default(this.bitmap, this.options.frequency, listener);
+
+        this.obfuscationStrategy = _Obfuscate2.default.oneBitAndShuffleForever;
+        this.revealStrategy = _Reveal2.default.oneBitAndShuffleUntilDone;
+    }
+
+    (0, _createClass3.default)(Bamboozle, [{
+        key: 'once',
+        value: function once() {
+            this.taskRunner.addSingleRun(_Obfuscate2.default.all);
+        }
+    }, {
+        key: 'start',
+        value: function start() {
+            this.taskRunner.addLoop(this.obfuscationStrategy);
+        }
+    }, {
+        key: 'stop',
+        value: function stop() {
+            this.taskRunner.stop();
+        }
+    }, {
+        key: 'set',
+        value: function set(options) {
+            this.options = (0, _extends3.default)({}, this.options, options);
+            this.taskRunner.frequency = this.options.frequency;
+            this.bitmap.setOptions({
+                exclude: this.options.exclude,
+                characters: this.options.characters
+            });
+        }
+    }, {
+        key: 'text',
+        value: function text() {
+            var fn = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+        }
+    }, {
+        key: 'reveal',
+        value: function reveal() {
+            var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+            var delay = arguments[1];
+
+            this.stop();
+
+            // calculate the frequency of updates needed to complete a full reveal on time
+            var frequency = this.bitmap.resolution.length > 0 && duration > 0 ? 1000 / (duration / this.bitmap.resolution.length) : this.options.frequency;
+
+            // console.log('reveal frequency', frequency);
+            // console.log('reveal period', (1 / frequency) * 1000);
+            // todo, definitely change the term to "pace" or something because that inequality check looks
+            // todo, and sounds backwards when you read it out loud...
+            // todo change speed to tempo and invert (1/tempo) at a deeper the term so that it reads better at this higher level
+            // let clampedSpeed = (speed > this.options.speed) ? this.options.speed : speed;
+
+            // duration sent to task runner is 0 or falsy so that no matter what the reveal
+            // will complete, either at a pace set to match the requested duration or
+            // at the default speed in options
+            this.taskRunner.addSingleRun(this.revealStrategy, delay, frequency);
+        }
+    }]);
+    return Bamboozle;
+}();
+
+exports.default = Bamboozle;
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = !__webpack_require__(7) && !__webpack_require__(10)(function () {
+  return Object.defineProperty(__webpack_require__(25)('div'), 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var has = __webpack_require__(9);
+var toIObject = __webpack_require__(11);
+var arrayIndexOf = __webpack_require__(69)(false);
+var IE_PROTO = __webpack_require__(29)('IE_PROTO');
 
 module.exports = function (object, names) {
   var O = toIObject(object);
@@ -761,61 +847,23 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
-
-
-/***/ }),
-/* 34 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// false -> Array#indexOf
-// true  -> Array#includes
-var toIObject = __webpack_require__(12);
-var toLength = __webpack_require__(35);
-var toAbsoluteIndex = __webpack_require__(36);
-module.exports = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = toIObject($this);
-    var length = toLength(O.length);
-    var index = toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare
-    if (IS_INCLUDES && el != el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare
-      if (value != value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
-      if (O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+var cof = __webpack_require__(15);
+// eslint-disable-next-line no-prototype-builtins
+module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+  return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
 
 /***/ }),
-/* 35 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(15);
+var toInteger = __webpack_require__(28);
 var min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
@@ -823,115 +871,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(15);
-var max = Math.max;
-var min = Math.min;
-module.exports = function (index, length) {
-  index = toInteger(index);
-  return index < 0 ? max(index + length, 0) : min(index, length);
-};
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var shared = __webpack_require__(38)('keys');
-var uid = __webpack_require__(39);
-module.exports = function (key) {
-  return shared[key] || (shared[key] = uid(key));
-};
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(3);
-var SHARED = '__core-js_shared__';
-var store = global[SHARED] || (global[SHARED] = {});
-module.exports = function (key) {
-  return store[key] || (store[key] = {});
-};
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports) {
-
-var id = 0;
-var px = Math.random();
-module.exports = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports) {
-
-// IE 8- don't enum bug keys
-module.exports = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports) {
-
-exports.f = Object.getOwnPropertySymbols;
-
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-exports.f = {}.propertyIsEnumerable;
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(14);
-module.exports = function (it) {
-  return Object(defined(it));
-};
-
-
-/***/ }),
 /* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(45), __esModule: true };
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(46);
-var $Object = __webpack_require__(4).Object;
-module.exports = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(10);
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(2), 'Object', { defineProperty: __webpack_require__(11).f });
-
-
-/***/ }),
-/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -941,15 +881,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classCallCheck2 = __webpack_require__(0);
+var _classCallCheck2 = __webpack_require__(12);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(1);
+var _createClass2 = __webpack_require__(13);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _ShuffledDeckGenerator = __webpack_require__(48);
+var _ShuffledDeckGenerator = __webpack_require__(74);
 
 var _ShuffledDeckGenerator2 = _interopRequireDefault(_ShuffledDeckGenerator);
 
@@ -1050,7 +990,344 @@ var Bitmap /*extends Array*/ = function () {
 exports.default = Bitmap;
 
 /***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(79), __esModule: true };
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $at = __webpack_require__(80)(true);
+
+// 21.1.3.27 String.prototype[@@iterator]()
+__webpack_require__(48)(String, 'String', function (iterated) {
+  this._t = String(iterated); // target
+  this._i = 0;                // next index
+// 21.1.5.2.1 %StringIteratorPrototype%.next()
+}, function () {
+  var O = this._t;
+  var index = this._i;
+  var point;
+  if (index >= O.length) return { value: undefined, done: true };
+  point = $at(O, index);
+  this._i += point.length;
+  return { value: point, done: false };
+});
+
+
+/***/ }),
 /* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var LIBRARY = __webpack_require__(23);
+var $export = __webpack_require__(3);
+var redefine = __webpack_require__(49);
+var hide = __webpack_require__(8);
+var has = __webpack_require__(9);
+var Iterators = __webpack_require__(16);
+var $iterCreate = __webpack_require__(81);
+var setToStringTag = __webpack_require__(24);
+var getPrototypeOf = __webpack_require__(51);
+var ITERATOR = __webpack_require__(2)('iterator');
+var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
+var FF_ITERATOR = '@@iterator';
+var KEYS = 'keys';
+var VALUES = 'values';
+
+var returnThis = function () { return this; };
+
+module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
+  $iterCreate(Constructor, NAME, next);
+  var getMethod = function (kind) {
+    if (!BUGGY && kind in proto) return proto[kind];
+    switch (kind) {
+      case KEYS: return function keys() { return new Constructor(this, kind); };
+      case VALUES: return function values() { return new Constructor(this, kind); };
+    } return function entries() { return new Constructor(this, kind); };
+  };
+  var TAG = NAME + ' Iterator';
+  var DEF_VALUES = DEFAULT == VALUES;
+  var VALUES_BUG = false;
+  var proto = Base.prototype;
+  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
+  var $default = (!BUGGY && $native) || getMethod(DEFAULT);
+  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
+  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
+  var methods, key, IteratorPrototype;
+  // Fix native
+  if ($anyNative) {
+    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
+    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
+      // Set @@toStringTag to native iterators
+      setToStringTag(IteratorPrototype, TAG, true);
+      // fix for some old engines
+      if (!LIBRARY && !has(IteratorPrototype, ITERATOR)) hide(IteratorPrototype, ITERATOR, returnThis);
+    }
+  }
+  // fix Array#{values, @@iterator}.name in V8 / FF
+  if (DEF_VALUES && $native && $native.name !== VALUES) {
+    VALUES_BUG = true;
+    $default = function values() { return $native.call(this); };
+  }
+  // Define iterator
+  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
+    hide(proto, ITERATOR, $default);
+  }
+  // Plug for library
+  Iterators[NAME] = $default;
+  Iterators[TAG] = returnThis;
+  if (DEFAULT) {
+    methods = {
+      values: DEF_VALUES ? $default : getMethod(VALUES),
+      keys: IS_SET ? $default : getMethod(KEYS),
+      entries: $entries
+    };
+    if (FORCED) for (key in methods) {
+      if (!(key in proto)) redefine(proto, key, methods[key]);
+    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+  }
+  return methods;
+};
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(8);
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var document = __webpack_require__(1).document;
+module.exports = document && document.documentElement;
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+var has = __webpack_require__(9);
+var toObject = __webpack_require__(33);
+var IE_PROTO = __webpack_require__(29)('IE_PROTO');
+var ObjectProto = Object.prototype;
+
+module.exports = Object.getPrototypeOf || function (O) {
+  O = toObject(O);
+  if (has(O, IE_PROTO)) return O[IE_PROTO];
+  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
+    return O.constructor.prototype;
+  } return O instanceof Object ? ObjectProto : null;
+};
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(83);
+var global = __webpack_require__(1);
+var hide = __webpack_require__(8);
+var Iterators = __webpack_require__(16);
+var TO_STRING_TAG = __webpack_require__(2)('toStringTag');
+
+var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
+  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
+  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
+  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
+  'TextTrackList,TouchList').split(',');
+
+for (var i = 0; i < DOMIterables.length; i++) {
+  var NAME = DOMIterables[i];
+  var Collection = global[NAME];
+  var proto = Collection && Collection.prototype;
+  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
+  Iterators[NAME] = Iterators.Array;
+}
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// getting tag from 19.1.3.6 Object.prototype.toString()
+var cof = __webpack_require__(15);
+var TAG = __webpack_require__(2)('toStringTag');
+// ES3 wrong here
+var ARG = cof(function () { return arguments; }()) == 'Arguments';
+
+// fallback for IE11 Script Access Denied error
+var tryGet = function (it, key) {
+  try {
+    return it[key];
+  } catch (e) { /* empty */ }
+};
+
+module.exports = function (it) {
+  var O, T, B;
+  return it === undefined ? 'Undefined' : it === null ? 'Null'
+    // @@toStringTag case
+    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
+    // builtinTag case
+    : ARG ? cof(O)
+    // ES3 arguments fallback
+    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+};
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.3.20 SpeciesConstructor(O, defaultConstructor)
+var anObject = __webpack_require__(4);
+var aFunction = __webpack_require__(17);
+var SPECIES = __webpack_require__(2)('species');
+module.exports = function (O, D) {
+  var C = anObject(O).constructor;
+  var S;
+  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
+};
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ctx = __webpack_require__(14);
+var invoke = __webpack_require__(92);
+var html = __webpack_require__(50);
+var cel = __webpack_require__(25);
+var global = __webpack_require__(1);
+var process = global.process;
+var setTask = global.setImmediate;
+var clearTask = global.clearImmediate;
+var MessageChannel = global.MessageChannel;
+var Dispatch = global.Dispatch;
+var counter = 0;
+var queue = {};
+var ONREADYSTATECHANGE = 'onreadystatechange';
+var defer, channel, port;
+var run = function () {
+  var id = +this;
+  // eslint-disable-next-line no-prototype-builtins
+  if (queue.hasOwnProperty(id)) {
+    var fn = queue[id];
+    delete queue[id];
+    fn();
+  }
+};
+var listener = function (event) {
+  run.call(event.data);
+};
+// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+if (!setTask || !clearTask) {
+  setTask = function setImmediate(fn) {
+    var args = [];
+    var i = 1;
+    while (arguments.length > i) args.push(arguments[i++]);
+    queue[++counter] = function () {
+      // eslint-disable-next-line no-new-func
+      invoke(typeof fn == 'function' ? fn : Function(fn), args);
+    };
+    defer(counter);
+    return counter;
+  };
+  clearTask = function clearImmediate(id) {
+    delete queue[id];
+  };
+  // Node.js 0.8-
+  if (__webpack_require__(15)(process) == 'process') {
+    defer = function (id) {
+      process.nextTick(ctx(run, id, 1));
+    };
+  // Sphere (JS game engine) Dispatch API
+  } else if (Dispatch && Dispatch.now) {
+    defer = function (id) {
+      Dispatch.now(ctx(run, id, 1));
+    };
+  // Browsers with MessageChannel, includes WebWorkers
+  } else if (MessageChannel) {
+    channel = new MessageChannel();
+    port = channel.port2;
+    channel.port1.onmessage = listener;
+    defer = ctx(port.postMessage, port, 1);
+  // Browsers with postMessage, skip WebWorkers
+  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
+  } else if (global.addEventListener && typeof postMessage == 'function' && !global.importScripts) {
+    defer = function (id) {
+      global.postMessage(id + '', '*');
+    };
+    global.addEventListener('message', listener, false);
+  // IE8-
+  } else if (ONREADYSTATECHANGE in cel('script')) {
+    defer = function (id) {
+      html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function () {
+        html.removeChild(this);
+        run.call(id);
+      };
+    };
+  // Rest old browsers
+  } else {
+    defer = function (id) {
+      setTimeout(ctx(run, id, 1), 0);
+    };
+  }
+}
+module.exports = {
+  set: setTask,
+  clear: clearTask
+};
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
+
+module.exports = function (exec) {
+  try {
+    return { e: false, v: exec() };
+  } catch (e) {
+    return { e: true, v: e };
+  }
+};
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(4);
+var isObject = __webpack_require__(6);
+var newPromiseCapability = __webpack_require__(36);
+
+module.exports = function (C, x) {
+  anObject(C);
+  if (isObject(x) && x.constructor === C) return x;
+  var promiseCapability = newPromiseCapability.f(C);
+  var resolve = promiseCapability.resolve;
+  resolve(x);
+  return promiseCapability.promise;
+};
+
+
+/***/ }),
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1060,13 +1337,1373 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _regenerator = __webpack_require__(7);
+var _regenerator = __webpack_require__(22);
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _classCallCheck2 = __webpack_require__(12);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(13);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _Shuffle = __webpack_require__(34);
+
+var _Shuffle2 = _interopRequireDefault(_Shuffle);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * when obfuscating we have a couple of options when the bitmap is
+ * full up with ones. we can either stop and return the last bitmap,
+ * or we can loop forever.
+ *
+ * looping forever let's the next function down the line treat all generators
+ * as potential infinite loops. it's a generalization or simplification that
+ * cuts down on decision making in the bitmap consumer.
+ *
+ * functions with loops that end use a return and are suffixed with UntilDone, functions with
+ * loops that continue yielding after the bitmap is full up are suffixed with Forever.
+ */
+var Obfuscate = function () {
+    function Obfuscate() {
+        (0, _classCallCheck3.default)(this, Obfuscate);
+    }
+
+    (0, _createClass3.default)(Obfuscate, null, [{
+        key: 'oneBitAndShuffleUntilDone',
+        value: /*#__PURE__*/_regenerator2.default.mark(function oneBitAndShuffleUntilDone() {
+            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+            var result, revealed, obfuscated;
+            return _regenerator2.default.wrap(function oneBitAndShuffleUntilDone$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            result = [];
+                            revealed = 0;
+                            obfuscated = 0;
+
+
+                            bitmap.forEach(function (bit) {
+                                if (bit) {
+                                    obfuscated++;
+                                } else {
+                                    revealed++;
+                                }
+                            });
+
+                        case 4:
+                            if (!bitmap) {
+                                _context.next = 18;
+                                break;
+                            }
+
+                            // step
+                            obfuscated++;
+                            revealed--;
+
+                            // guard
+                            obfuscated = obfuscated > bitmap.length ? bitmap.length : obfuscated;
+                            revealed = revealed < 0 ? 0 : revealed;
+
+                            // resolve
+                            result = (0, _Shuffle2.default)(Array(revealed).fill(0).concat(Array(obfuscated).fill(1)));
+
+                            // yield/return
+
+                            if (!result.includes(0)) {
+                                _context.next = 15;
+                                break;
+                            }
+
+                            _context.next = 13;
+                            return result;
+
+                        case 13:
+                            _context.next = 16;
+                            break;
+
+                        case 15:
+                            return _context.abrupt('return', result);
+
+                        case 16:
+                            _context.next = 4;
+                            break;
+
+                        case 18:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, oneBitAndShuffleUntilDone, this);
+        })
+    }, {
+        key: 'oneBitAndShuffleForever',
+        value: /*#__PURE__*/_regenerator2.default.mark(function oneBitAndShuffleForever() {
+            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+            var result, revealed, obfuscated;
+            return _regenerator2.default.wrap(function oneBitAndShuffleForever$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            result = [];
+                            revealed = 0;
+                            obfuscated = 0;
+
+
+                            bitmap.forEach(function (bit) {
+                                if (bit) {
+                                    obfuscated++;
+                                } else {
+                                    revealed++;
+                                }
+                            });
+
+                        case 4:
+                            if (!bitmap) {
+                                _context2.next = 14;
+                                break;
+                            }
+
+                            // step
+                            obfuscated++;
+                            revealed--;
+
+                            // guard
+                            obfuscated = obfuscated > bitmap.length ? bitmap.length : obfuscated;
+                            revealed = revealed < 0 ? 0 : revealed;
+
+                            // resolve
+                            result = (0, _Shuffle2.default)(Array(revealed).fill(0).concat(Array(obfuscated).fill(1)));
+
+                            // yield
+                            _context2.next = 12;
+                            return result;
+
+                        case 12:
+                            _context2.next = 4;
+                            break;
+
+                        case 14:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, oneBitAndShuffleForever, this);
+        })
+    }, {
+        key: 'leftToRightUntilDone',
+        value: /*#__PURE__*/_regenerator2.default.mark(function leftToRightUntilDone(bitmap) {
+            var result, i;
+            return _regenerator2.default.wrap(function leftToRightUntilDone$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            i = 0;
+
+                        case 2:
+                            if (!(i < result.length)) {
+                                _context3.next = 13;
+                                break;
+                            }
+
+                            result[i] = 1;
+
+                            if (!result.includes(0)) {
+                                _context3.next = 9;
+                                break;
+                            }
+
+                            _context3.next = 7;
+                            return result;
+
+                        case 7:
+                            _context3.next = 10;
+                            break;
+
+                        case 9:
+                            return _context3.abrupt('return', result);
+
+                        case 10:
+                            i++;
+                            _context3.next = 2;
+                            break;
+
+                        case 13:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, leftToRightUntilDone, this);
+        })
+    }, {
+        key: 'leftToRightForever',
+        value: /*#__PURE__*/_regenerator2.default.mark(function leftToRightForever(bitmap) {
+            var result, i;
+            return _regenerator2.default.wrap(function leftToRightForever$(_context4) {
+                while (1) {
+                    switch (_context4.prev = _context4.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            i = 0;
+
+                        case 2:
+                            if (!(i < result.length)) {
+                                _context4.next = 9;
+                                break;
+                            }
+
+                            result[i] = 1;
+
+                            _context4.next = 6;
+                            return result;
+
+                        case 6:
+                            i++;
+                            _context4.next = 2;
+                            break;
+
+                        case 9:
+                        case 'end':
+                            return _context4.stop();
+                    }
+                }
+            }, leftToRightForever, this);
+        })
+    }, {
+        key: 'rightToLeftUntilDone',
+        value: /*#__PURE__*/_regenerator2.default.mark(function rightToLeftUntilDone(bitmap) {
+            var result, i;
+            return _regenerator2.default.wrap(function rightToLeftUntilDone$(_context5) {
+                while (1) {
+                    switch (_context5.prev = _context5.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            i = result.length - 1;
+
+                        case 2:
+                            if (!(i > -1)) {
+                                _context5.next = 13;
+                                break;
+                            }
+
+                            result[i] = 1;
+
+                            if (!result.includes(0)) {
+                                _context5.next = 9;
+                                break;
+                            }
+
+                            _context5.next = 7;
+                            return result;
+
+                        case 7:
+                            _context5.next = 10;
+                            break;
+
+                        case 9:
+                            return _context5.abrupt('return', result);
+
+                        case 10:
+                            i--;
+                            _context5.next = 2;
+                            break;
+
+                        case 13:
+                        case 'end':
+                            return _context5.stop();
+                    }
+                }
+            }, rightToLeftUntilDone, this);
+        })
+    }, {
+        key: 'rightToLeftForever',
+        value: /*#__PURE__*/_regenerator2.default.mark(function rightToLeftForever(bitmap) {
+            var result, i;
+            return _regenerator2.default.wrap(function rightToLeftForever$(_context6) {
+                while (1) {
+                    switch (_context6.prev = _context6.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            i = result.length - 1;
+
+                        case 2:
+                            if (!(i > -1)) {
+                                _context6.next = 9;
+                                break;
+                            }
+
+                            result[i] = 1;
+                            _context6.next = 6;
+                            return result;
+
+                        case 6:
+                            i--;
+                            _context6.next = 2;
+                            break;
+
+                        case 9:
+                            if (!result) {
+                                _context6.next = 14;
+                                break;
+                            }
+
+                            _context6.next = 12;
+                            return result;
+
+                        case 12:
+                            _context6.next = 9;
+                            break;
+
+                        case 14:
+                        case 'end':
+                            return _context6.stop();
+                    }
+                }
+            }, rightToLeftForever, this);
+        })
+    }, {
+        key: 'insideToOutsideUntilDone',
+        value: /*#__PURE__*/_regenerator2.default.mark(function insideToOutsideUntilDone(bitmap) {
+            var result, centerIndex, centerLeftIndex, i, _i;
+
+            return _regenerator2.default.wrap(function insideToOutsideUntilDone$(_context7) {
+                while (1) {
+                    switch (_context7.prev = _context7.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            centerIndex = Math.floor(result.length / 2);
+                            centerLeftIndex = centerIndex - 1;
+
+                            if (!(result.length % 2 === 0)) {
+                                _context7.next = 21;
+                                break;
+                            }
+
+                            i = 0;
+
+                        case 5:
+                            if (!(i <= centerIndex)) {
+                                _context7.next = 19;
+                                break;
+                            }
+
+                            result[centerIndex] = 1;
+                            result[centerIndex + i] = 1;
+
+                            result[centerLeftIndex] = 1;
+                            result[centerLeftIndex - i] = 1;
+
+                            if (!result.includes(0)) {
+                                _context7.next = 15;
+                                break;
+                            }
+
+                            _context7.next = 13;
+                            return result;
+
+                        case 13:
+                            _context7.next = 16;
+                            break;
+
+                        case 15:
+                            return _context7.abrupt('return', result);
+
+                        case 16:
+                            i++;
+                            _context7.next = 5;
+                            break;
+
+                        case 19:
+                            _context7.next = 35;
+                            break;
+
+                        case 21:
+                            _i = 0;
+
+                        case 22:
+                            if (!(_i <= centerIndex)) {
+                                _context7.next = 35;
+                                break;
+                            }
+
+                            result[centerIndex] = 1;
+                            result[centerIndex + _i] = 1;
+                            result[centerIndex - _i] = 1;
+
+                            if (!result.includes(0)) {
+                                _context7.next = 31;
+                                break;
+                            }
+
+                            _context7.next = 29;
+                            return result;
+
+                        case 29:
+                            _context7.next = 32;
+                            break;
+
+                        case 31:
+                            return _context7.abrupt('return', result);
+
+                        case 32:
+                            _i++;
+                            _context7.next = 22;
+                            break;
+
+                        case 35:
+                        case 'end':
+                            return _context7.stop();
+                    }
+                }
+            }, insideToOutsideUntilDone, this);
+        })
+    }, {
+        key: 'insideToOutsideForever',
+        value: /*#__PURE__*/_regenerator2.default.mark(function insideToOutsideForever(bitmap) {
+            var result, centerIndex, centerLeftIndex, i, _i2;
+
+            return _regenerator2.default.wrap(function insideToOutsideForever$(_context8) {
+                while (1) {
+                    switch (_context8.prev = _context8.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            centerIndex = Math.floor(result.length / 2);
+                            centerLeftIndex = centerIndex - 1;
+
+                            if (!(result.length % 2 === 0)) {
+                                _context8.next = 17;
+                                break;
+                            }
+
+                            i = 0;
+
+                        case 5:
+                            if (!(i <= centerIndex)) {
+                                _context8.next = 15;
+                                break;
+                            }
+
+                            result[centerIndex] = 1;
+                            result[centerIndex + i] = 1;
+
+                            result[centerLeftIndex] = 1;
+                            result[centerLeftIndex - i] = 1;
+
+                            _context8.next = 12;
+                            return result;
+
+                        case 12:
+                            i++;
+                            _context8.next = 5;
+                            break;
+
+                        case 15:
+                            _context8.next = 27;
+                            break;
+
+                        case 17:
+                            _i2 = 0;
+
+                        case 18:
+                            if (!(_i2 <= centerIndex)) {
+                                _context8.next = 27;
+                                break;
+                            }
+
+                            result[centerIndex] = 1;
+                            result[centerIndex + _i2] = 1;
+                            result[centerIndex - _i2] = 1;
+
+                            _context8.next = 24;
+                            return result;
+
+                        case 24:
+                            _i2++;
+                            _context8.next = 18;
+                            break;
+
+                        case 27:
+                            if (!bitmap) {
+                                _context8.next = 32;
+                                break;
+                            }
+
+                            _context8.next = 30;
+                            return result;
+
+                        case 30:
+                            _context8.next = 27;
+                            break;
+
+                        case 32:
+                        case 'end':
+                            return _context8.stop();
+                    }
+                }
+            }, insideToOutsideForever, this);
+        })
+    }, {
+        key: 'outsideToInsideForever',
+        value: /*#__PURE__*/_regenerator2.default.mark(function outsideToInsideForever(bitmap) {
+            var result, centerIndex, i;
+            return _regenerator2.default.wrap(function outsideToInsideForever$(_context9) {
+                while (1) {
+                    switch (_context9.prev = _context9.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            centerIndex = Math.floor(result.length / 2);
+                            i = 0;
+
+                        case 3:
+                            if (!(i <= centerIndex)) {
+                                _context9.next = 11;
+                                break;
+                            }
+
+                            result[i] = 1;
+                            result[result.length - 1 - i] = 1;
+
+                            _context9.next = 8;
+                            return result;
+
+                        case 8:
+                            i++;
+                            _context9.next = 3;
+                            break;
+
+                        case 11:
+                            if (!bitmap) {
+                                _context9.next = 16;
+                                break;
+                            }
+
+                            _context9.next = 14;
+                            return bitmap;
+
+                        case 14:
+                            _context9.next = 11;
+                            break;
+
+                        case 16:
+                        case 'end':
+                            return _context9.stop();
+                    }
+                }
+            }, outsideToInsideForever, this);
+        })
+    }, {
+        key: 'outsideToInsideUntilDone',
+        value: /*#__PURE__*/_regenerator2.default.mark(function outsideToInsideUntilDone(bitmap) {
+            var result, centerIndex, i;
+            return _regenerator2.default.wrap(function outsideToInsideUntilDone$(_context10) {
+                while (1) {
+                    switch (_context10.prev = _context10.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            centerIndex = Math.floor(result.length / 2);
+                            i = 0;
+
+                        case 3:
+                            if (!(i <= centerIndex)) {
+                                _context10.next = 15;
+                                break;
+                            }
+
+                            result[i] = 1;
+                            result[result.length - 1 - i] = 1;
+
+                            if (!result.includes(0)) {
+                                _context10.next = 11;
+                                break;
+                            }
+
+                            _context10.next = 9;
+                            return result;
+
+                        case 9:
+                            _context10.next = 12;
+                            break;
+
+                        case 11:
+                            return _context10.abrupt('return', result);
+
+                        case 12:
+                            i++;
+                            _context10.next = 3;
+                            break;
+
+                        case 15:
+                        case 'end':
+                            return _context10.stop();
+                    }
+                }
+            }, outsideToInsideUntilDone, this);
+        })
+    }, {
+        key: 'all',
+        value: /*#__PURE__*/_regenerator2.default.mark(function all() {
+            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+            return _regenerator2.default.wrap(function all$(_context11) {
+                while (1) {
+                    switch (_context11.prev = _context11.next) {
+                        case 0:
+                            return _context11.abrupt('return', bitmap.fill(1));
+
+                        case 1:
+                        case 'end':
+                            return _context11.stop();
+                    }
+                }
+            }, all, this);
+        })
+    }]);
+    return Obfuscate;
+}();
+
+exports.default = Obfuscate;
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _regenerator = __webpack_require__(22);
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _classCallCheck2 = __webpack_require__(12);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(13);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _Shuffle = __webpack_require__(34);
+
+var _Shuffle2 = _interopRequireDefault(_Shuffle);
+
+var _Bitmap = __webpack_require__(44);
+
+var _Bitmap2 = _interopRequireDefault(_Bitmap);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * all of the static generators take an array of zero or more length as an argument
+ * and will yield or return an array of the same length
+ *
+ * the bitmap corresponds with a string of the same length, handled elsewhere, where
+ * zeroes and ones indicate revealed and obfuscated characters
+ *
+ * a return statement is used when the bitmap is fully revealed in order to
+ * end the generator *and* yield a defined value to the caller.
+ *
+ * you see, the MDN generator function example had a yield as the last line in a generator,
+ * but that leads to ambiguity where you have to call the generator one more time
+ * than necessary, then immediately recall the previous value. otherwise you're stuck
+ * with the final yield which gives you { done: true, value: undefined } -_-
+ *
+ * on the other hand, a return statement in a generator will give you something
+ * much more useful: { done: true, value: <a value!> } ^_^
+ *
+ * so given that, yields are used while looping and returns are used when finalizing
+ */
+var Reveal = function () {
+    function Reveal() {
+        (0, _classCallCheck3.default)(this, Reveal);
+    }
+
+    (0, _createClass3.default)(Reveal, null, [{
+        key: 'oneBitAndShuffleUntilDone',
+        value: /*#__PURE__*/_regenerator2.default.mark(function oneBitAndShuffleUntilDone() {
+            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+            var result, revealed, obfuscated;
+            return _regenerator2.default.wrap(function oneBitAndShuffleUntilDone$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            result = [];
+                            revealed = 0;
+                            obfuscated = 0;
+
+                            // first count up our ones/obfuscated and zeroes/revealed to initialize
+
+                            bitmap.forEach(function (bit) {
+                                // coercing a truthy here, which i guess leaves open the possibility
+                                // of non-binary bits if you want to get real creative down the line
+                                if (bit) {
+                                    obfuscated++;
+                                } else {
+                                    revealed++;
+                                }
+                            });
+
+                            // so long as we have an array to work with, stay in this loop
+
+                        case 4:
+                            if (!bitmap) {
+                                _context.next = 18;
+                                break;
+                            }
+
+                            obfuscated--;
+                            revealed++;
+
+                            // not the best guard statements, but i'm already upside down with
+                            // decrementing at the beginning of the loop... oh well...
+                            obfuscated = obfuscated < 0 ? 0 : obfuscated;
+                            revealed = revealed > bitmap.length ? bitmap.length : revealed;
+
+                            // a bit terse and ugly, but just building a new bitmap based on
+                            // our current count of obfuscated and revealed (obfuscation assumed as ones here)
+                            result = (0, _Shuffle2.default)(Array(revealed).fill(0).concat(Array(obfuscated).fill(1)));
+
+                            // finally, only return and indicate that we're done draining the ones
+                            // if that's actually true :P
+
+                            if (!(obfuscated > 0)) {
+                                _context.next = 15;
+                                break;
+                            }
+
+                            _context.next = 13;
+                            return result;
+
+                        case 13:
+                            _context.next = 16;
+                            break;
+
+                        case 15:
+                            return _context.abrupt('return', result);
+
+                        case 16:
+                            _context.next = 4;
+                            break;
+
+                        case 18:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, oneBitAndShuffleUntilDone, this);
+        })
+    }, {
+        key: 'leftToRight',
+        value: /*#__PURE__*/_regenerator2.default.mark(function leftToRight() {
+            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _Bitmap2.default;
+            var result, i;
+            return _regenerator2.default.wrap(function leftToRight$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            // cloning the array since native class extensions don't
+                            // work right now, i'm sure this is cleaner in babel 7
+                            result = bitmap.concat([]);
+                            i = 0;
+
+                        case 2:
+                            if (!(i < result.length)) {
+                                _context2.next = 13;
+                                break;
+                            }
+
+                            result[i] = 0;
+
+                            if (!bitmap.includes(1)) {
+                                _context2.next = 9;
+                                break;
+                            }
+
+                            _context2.next = 7;
+                            return result;
+
+                        case 7:
+                            _context2.next = 10;
+                            break;
+
+                        case 9:
+                            return _context2.abrupt('return', result);
+
+                        case 10:
+                            i++;
+                            _context2.next = 2;
+                            break;
+
+                        case 13:
+                            return _context2.abrupt('return', result);
+
+                        case 14:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, leftToRight, this);
+        })
+
+        // todo remove .array access after updating to babel 7
+
+    }, {
+        key: 'rightToLeft',
+        value: /*#__PURE__*/_regenerator2.default.mark(function rightToLeft() {
+            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+            var result, i;
+            return _regenerator2.default.wrap(function rightToLeft$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            // cloning the array since native class extensions don't
+                            // work right now, i'm sure this is cleaner in babel 7
+                            result = bitmap.concat([]);
+                            i = result.length - 1;
+
+                        case 2:
+                            if (!(i > -1)) {
+                                _context3.next = 13;
+                                break;
+                            }
+
+                            result[i] = 0;
+
+                            if (!result.includes(1)) {
+                                _context3.next = 9;
+                                break;
+                            }
+
+                            _context3.next = 7;
+                            return result;
+
+                        case 7:
+                            _context3.next = 10;
+                            break;
+
+                        case 9:
+                            return _context3.abrupt('return', result);
+
+                        case 10:
+                            i--;
+                            _context3.next = 2;
+                            break;
+
+                        case 13:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, rightToLeft, this);
+        })
+    }, {
+        key: 'insideToOutside',
+        value: /*#__PURE__*/_regenerator2.default.mark(function insideToOutside(bitmap) {
+            var result, centerIndex, centerLeftIndex, i, _i;
+
+            return _regenerator2.default.wrap(function insideToOutside$(_context4) {
+                while (1) {
+                    switch (_context4.prev = _context4.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            centerIndex = Math.floor(result.length / 2);
+                            centerLeftIndex = centerIndex - 1;
+
+                            if (!(result.length % 2 === 0)) {
+                                _context4.next = 21;
+                                break;
+                            }
+
+                            i = 0;
+
+                        case 5:
+                            if (!(i <= centerIndex)) {
+                                _context4.next = 19;
+                                break;
+                            }
+
+                            result[centerIndex] = 0;
+                            result[centerIndex + i] = 0;
+
+                            result[centerLeftIndex] = 0;
+                            result[centerLeftIndex - i] = 0;
+
+                            if (!result.includes(1)) {
+                                _context4.next = 15;
+                                break;
+                            }
+
+                            _context4.next = 13;
+                            return result;
+
+                        case 13:
+                            _context4.next = 16;
+                            break;
+
+                        case 15:
+                            return _context4.abrupt('return', result);
+
+                        case 16:
+                            i++;
+                            _context4.next = 5;
+                            break;
+
+                        case 19:
+                            _context4.next = 35;
+                            break;
+
+                        case 21:
+                            _i = 0;
+
+                        case 22:
+                            if (!(_i <= centerIndex)) {
+                                _context4.next = 35;
+                                break;
+                            }
+
+                            result[centerIndex] = 0;
+                            result[centerIndex + _i] = 0;
+                            result[centerIndex - _i] = 0;
+
+                            if (!result.includes(1)) {
+                                _context4.next = 31;
+                                break;
+                            }
+
+                            _context4.next = 29;
+                            return result;
+
+                        case 29:
+                            _context4.next = 32;
+                            break;
+
+                        case 31:
+                            return _context4.abrupt('return', result);
+
+                        case 32:
+                            _i++;
+                            _context4.next = 22;
+                            break;
+
+                        case 35:
+                        case 'end':
+                            return _context4.stop();
+                    }
+                }
+            }, insideToOutside, this);
+        })
+    }, {
+        key: 'outsideToInside',
+        value: /*#__PURE__*/_regenerator2.default.mark(function outsideToInside(bitmap) {
+            var result, centerIndex, i;
+            return _regenerator2.default.wrap(function outsideToInside$(_context5) {
+                while (1) {
+                    switch (_context5.prev = _context5.next) {
+                        case 0:
+                            result = bitmap.concat([]);
+                            centerIndex = Math.floor(result.length / 2);
+                            i = 0;
+
+                        case 3:
+                            if (!(i <= centerIndex)) {
+                                _context5.next = 15;
+                                break;
+                            }
+
+                            result[i] = 0;
+                            result[result.length - 1 - i] = 0;
+
+                            if (!result.includes(1)) {
+                                _context5.next = 11;
+                                break;
+                            }
+
+                            _context5.next = 9;
+                            return result;
+
+                        case 9:
+                            _context5.next = 12;
+                            break;
+
+                        case 11:
+                            return _context5.abrupt('return', result);
+
+                        case 12:
+                            i++;
+                            _context5.next = 3;
+                            break;
+
+                        case 15:
+                        case 'end':
+                            return _context5.stop();
+                    }
+                }
+            }, outsideToInside, this);
+        })
+    }]);
+    return Reveal;
+}();
+
+exports.default = Reveal;
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _iterator = __webpack_require__(105);
+
+var _iterator2 = _interopRequireDefault(_iterator);
+
+var _symbol = __webpack_require__(107);
+
+var _symbol2 = _interopRequireDefault(_symbol);
+
+var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+var $keys = __webpack_require__(41);
+var hiddenKeys = __webpack_require__(31).concat('length', 'prototype');
+
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys(O, hiddenKeys);
+};
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pIE = __webpack_require__(21);
+var createDesc = __webpack_require__(18);
+var toIObject = __webpack_require__(11);
+var toPrimitive = __webpack_require__(26);
+var has = __webpack_require__(9);
+var IE8_DOM_DEFINE = __webpack_require__(40);
+var gOPD = Object.getOwnPropertyDescriptor;
+
+exports.f = __webpack_require__(7) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+  O = toIObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return gOPD(O, P);
+  } catch (e) { /* empty */ }
+  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
+};
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Bamboozle = __webpack_require__(39);
+
+var _Bamboozle2 = _interopRequireDefault(_Bamboozle);
+
+var _BamboozleSpecial = __webpack_require__(99);
+
+var _BamboozleSpecial2 = _interopRequireDefault(_BamboozleSpecial);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var pangram = 'Pack my box with five dozen liquor jugs.';
+var options = {
+    characters: ['▀▁▂▃▄▅▆▇█▉▊▋▌▍▎', // U+258x
+    '▐░▒▓▔▕▖▗▘▙▚▛▜▝▞▟'].join(''),
+    exclude: '. '
+};
+var target = document.getElementById('output');
+var basicQueue = document.getElementById('basic-queue');
+
+function displayQueue(container, activeTask, queue) {
+    var html = '<ul>';
+    if (activeTask.strategyGenerator) {
+        html += '<li><strong>' + activeTask.strategyGenerator.name + '</strong></li>';
+    }
+
+    queue.forEach(function (item) {
+        html += '<li>' + item.strategyGenerator.name + '</li>';
+    });
+    html += '</ul>';
+
+    container.innerHTML = html;
+}
+
+document.getElementById('start').addEventListener('click', function () {
+    bam.start();
+});
+
+document.getElementById('stop').addEventListener('click', function () {
+    bam.stop();
+});
+
+document.getElementById('reveal').addEventListener('click', function () {
+    bam.reveal();
+});
+
+var bam = new _Bamboozle2.default(function (message, activeTask, queue) {
+    displayQueue(basicQueue, activeTask, queue);
+    target.textContent = message;
+}, pangram, options);
+
+bam.start();
+
+document.getElementById('basic-frequency').addEventListener('input', function (event) {
+    console.log(event.target.value);
+    bam.set({ frequency: event.target.value });
+});
+
+/* ================================ */
+
+var specialPangram = 'Sixty zippers were quickly picked from the woven jute bag.';
+var specialTarget = document.getElementById('special');
+
+var bs = new _BamboozleSpecial2.default(function (message) {
+    specialTarget.textContent = message;
+}, specialPangram, options);
+
+bs.once();
+
+document.getElementById('special-controls').addEventListener('click', function (event) {
+    switch (event.target.id) {
+        case 'r-ltr':
+            bs.revealLeftToRight();
+            break;
+        case 'r-rtl':
+            bs.revealRightToLeft();
+            break;
+        case 'r-ito':
+            bs.revealInsideToOutside();
+            break;
+        case 'r-oti':
+            bs.revealOutsideToInside();
+            break;
+        case 'o-ltr':
+            bs.obfuscateLeftToRightUntilDone();
+            break;
+        case 'o-rtl':
+            bs.obfuscateRightToLeftUntilDone();
+            break;
+        case 'o-ito':
+            bs.obfuscateInsideToOutsideUntilDone();
+            break;
+        case 'o-oti':
+            bs.obfuscateOutsideToInsideUntilDone();
+            break;
+        default:
+            console.error('didn\'t match an id');
+    }
+});
+
+// document.getElementById('duration').addEventListener('change', (event) => {
+//     console.log(event);
+// });
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _assign = __webpack_require__(65);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _assign2.default || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(66), __esModule: true };
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(67);
+module.exports = __webpack_require__(0).Object.assign;
+
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.1 Object.assign(target, source)
+var $export = __webpack_require__(3);
+
+$export($export.S + $export.F, 'Object', { assign: __webpack_require__(68) });
+
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// 19.1.2.1 Object.assign(target, source, ...)
+var getKeys = __webpack_require__(19);
+var gOPS = __webpack_require__(32);
+var pIE = __webpack_require__(21);
+var toObject = __webpack_require__(33);
+var IObject = __webpack_require__(42);
+var $assign = Object.assign;
+
+// should work with symbols and should have deterministic property order (V8 bug)
+module.exports = !$assign || __webpack_require__(10)(function () {
+  var A = {};
+  var B = {};
+  // eslint-disable-next-line no-undef
+  var S = Symbol();
+  var K = 'abcdefghijklmnopqrst';
+  A[S] = 7;
+  K.split('').forEach(function (k) { B[k] = k; });
+  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
+  var T = toObject(target);
+  var aLen = arguments.length;
+  var index = 1;
+  var getSymbols = gOPS.f;
+  var isEnum = pIE.f;
+  while (aLen > index) {
+    var S = IObject(arguments[index++]);
+    var keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
+  } return T;
+} : $assign;
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// false -> Array#indexOf
+// true  -> Array#includes
+var toIObject = __webpack_require__(11);
+var toLength = __webpack_require__(43);
+var toAbsoluteIndex = __webpack_require__(70);
+module.exports = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
+      if (O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(28);
+var max = Math.max;
+var min = Math.min;
+module.exports = function (index, length) {
+  index = toInteger(index);
+  return index < 0 ? max(index + length, 0) : min(index, length);
+};
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(72), __esModule: true };
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(73);
+var $Object = __webpack_require__(0).Object;
+module.exports = function defineProperty(it, key, desc) {
+  return $Object.defineProperty(it, key, desc);
+};
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(3);
+// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+$export($export.S + $export.F * !__webpack_require__(7), 'Object', { defineProperty: __webpack_require__(5).f });
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _regenerator = __webpack_require__(22);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
 exports.default = _callee;
 
-var _Shuffle = __webpack_require__(8);
+var _Shuffle = __webpack_require__(34);
 
 var _Shuffle2 = _interopRequireDefault(_Shuffle);
 
@@ -1111,7 +2748,7 @@ function _callee(list) {
 }
 
 /***/ }),
-/* 49 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -1136,7 +2773,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(50);
+module.exports = __webpack_require__(76);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -1152,7 +2789,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 50 */
+/* 76 */
 /***/ (function(module, exports) {
 
 /**
@@ -1885,7 +3522,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 51 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1895,111 +3532,174 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends2 = __webpack_require__(9);
+var _regenerator = __webpack_require__(22);
 
-var _extends3 = _interopRequireDefault(_extends2);
+var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _classCallCheck2 = __webpack_require__(0);
+var _asyncToGenerator2 = __webpack_require__(78);
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _promise = __webpack_require__(45);
+
+var _promise2 = _interopRequireDefault(_promise);
+
+var _classCallCheck2 = __webpack_require__(12);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(1);
+var _createClass2 = __webpack_require__(13);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TaskRunner = function () {
-    function TaskRunner() {
-        var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    function TaskRunner(bitmap, frequency) {
         var listener = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
         (0, _classCallCheck3.default)(this, TaskRunner);
 
         this.bitmap = bitmap;
-        this.options = (0, _extends3.default)({}, options);
+        this.frequency = frequency;
         this.listener = listener;
         this.queue = [];
-        this.running = false;
-        this.interval = function () {};
+        this.stopped = true;
+        this.activeTask = {};
+
+        this.updateListener();
     }
 
     (0, _createClass3.default)(TaskRunner, [{
-        key: "add",
+        key: 'add',
         value: function add(strategyGenerator) {
             var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
             var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-            var speed = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.options.speed;
+            var frequency = arguments[3];
 
-            this.queue.push({ strategyGenerator: strategyGenerator, duration: duration, delay: delay, speed: speed });
+            this.queue.push({ strategyGenerator: strategyGenerator, duration: duration, delay: delay, frequency: frequency });
+            this.play();
+        }
+    }, {
+        key: 'addLoop',
+        value: function addLoop(strategyGenerator, duration, delay, frequency) {
+            this.add(strategyGenerator, duration, delay, frequency);
+        }
+    }, {
+        key: 'addSingleRun',
+        value: function addSingleRun(strategyGenerator, delay, frequency) {
+            this.add(strategyGenerator, false, delay, frequency);
+        }
+    }, {
+        key: 'play',
+        value: function play() {
+            var _this = this;
 
-            if (!this.running) {
-                this.run(this.queue.shift());
+            console.log('stopped?', this.stopped);
+            if (this.stopped) {
+                this.activeTask = this.queue.shift();
+
+                this.run(this.activeTask).then(function () {
+                    if (_this.queue.length > 0) {
+                        _this.activeTask = _this.queue.shift();
+                        _this.run(_this.activeTask);
+                    } else {
+                        console.log('out of tasks, stopping');
+                        _this.stop();
+                    }
+                });
             }
         }
     }, {
-        key: "addLoop",
-        value: function addLoop(strategyGenerator, duration, delay, speed) {
-            this.add(strategyGenerator, duration, delay, speed);
-        }
-    }, {
-        key: "addSingleRun",
-        value: function addSingleRun(strategyGenerator, delay, speed) {
-            this.add(strategyGenerator, false, delay, speed);
-        }
-    }, {
-        key: "run",
+        key: 'run',
         value: function run(_ref) {
-            var _this = this;
+            var _this2 = this;
 
             var strategyGenerator = _ref.strategyGenerator,
                 duration = _ref.duration,
                 delay = _ref.delay,
-                speed = _ref.speed;
+                frequency = _ref.frequency;
 
-            this.running = true;
-            clearInterval(this.interval);
+            delay = delay ? delay : 0;
+            var generator = strategyGenerator(this.bitmap);
 
-            setTimeout(function () {
-                _this.strategy = strategyGenerator(_this.bitmap);
-                _this.interval = setInterval(_this.step.bind(_this), speed);
+            this.stopped = false;
 
+            return new _promise2.default(function (resolve) {
                 if (duration) {
-                    setTimeout(function () {
-                        clearInterval(_this.interval);
-                        if (_this.queue.length > 0) {
-                            _this.run(_this.queue.shift());
-                        } else {
-                            _this.running = false;
-                        }
-                    }, duration);
+                    setTimeout(resolve, duration);
                 }
-            }, delay);
+
+                setTimeout((0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+                    var value, done, period, _ref3;
+
+                    return _regenerator2.default.wrap(function _callee$(_context) {
+                        while (1) {
+                            switch (_context.prev = _context.next) {
+                                case 0:
+                                    value = [];
+                                    done = false;
+
+                                case 2:
+                                    if (!(!done && !_this2.stopped)) {
+                                        _context.next = 13;
+                                        break;
+                                    }
+
+                                    period = frequency ? 1 / frequency * 1000 : 1 / _this2.frequency * 1000;
+                                    _context.next = 6;
+                                    return _this2.step(generator, period);
+
+                                case 6:
+                                    _ref3 = _context.sent;
+                                    value = _ref3.value;
+                                    done = _ref3.done;
+
+
+                                    if (value) {
+                                        _this2.bitmap.setBitmap(value);
+                                    }
+
+                                    _this2.updateListener();
+                                    _context.next = 2;
+                                    break;
+
+                                case 13:
+
+                                    resolve();
+
+                                case 14:
+                                case 'end':
+                                    return _context.stop();
+                            }
+                        }
+                    }, _callee, _this2);
+                })), delay);
+            });
         }
     }, {
-        key: "step",
-        value: function step() {
-            var _strategy$next = this.strategy.next(),
-                bitmap = _strategy$next.value,
-                done = _strategy$next.done;
+        key: 'step',
+        value: function step(generator, period) {
+            return new _promise2.default(function (resolve) {
+                var _generator$next = generator.next(),
+                    value = _generator$next.value,
+                    done = _generator$next.done;
 
-            if (done) {
-                this.stop();
-            }
-
-            if (bitmap) {
-                this.bitmap.setBitmap(bitmap);
-            }
-
-            this.listener(this.bitmap.render());
+                setTimeout(function () {
+                    resolve({ value: value, done: done });
+                }, period);
+            });
         }
     }, {
-        key: "stop",
+        key: 'stop',
         value: function stop() {
-            clearInterval(this.interval);
-            this.running = false;
-            this.queue = [];
-            // that doesn't wipe out the queue
+            this.activeTask = {};
+            this.stopped = true;
+            this.updateListener();
+        }
+    }, {
+        key: 'updateListener',
+        value: function updateListener() {
+            this.listener(this.bitmap.render(), this.activeTask, this.queue);
         }
     }]);
     return TaskRunner;
@@ -2008,277 +3708,755 @@ var TaskRunner = function () {
 exports.default = TaskRunner;
 
 /***/ }),
-/* 52 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+exports.__esModule = true;
 
-var _regenerator = __webpack_require__(7);
+var _promise = __webpack_require__(45);
 
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _classCallCheck2 = __webpack_require__(0);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(1);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _Shuffle = __webpack_require__(8);
-
-var _Shuffle2 = _interopRequireDefault(_Shuffle);
+var _promise2 = _interopRequireDefault(_promise);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * when obfuscating we have a couple of options when the bitmap is
- * full up with ones. we can either stop and return the last bitmap,
- * or we can loop forever.
- *
- * looping forever let's the next function down the line treat all generators
- * as potential infinite loops. it's a generalization or simplification that
- * cuts down on decision making in the bitmap consumer.
- *
- * functions with loops that end use a return and are suffixed with UntilDone, functions with
- * loops that continue yielding after the bitmap is full up are suffixed with Forever.
- */
-var Obfuscate = function () {
-    function Obfuscate() {
-        (0, _classCallCheck3.default)(this, Obfuscate);
-    }
+exports.default = function (fn) {
+  return function () {
+    var gen = fn.apply(this, arguments);
+    return new _promise2.default(function (resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg);
+          var value = info.value;
+        } catch (error) {
+          reject(error);
+          return;
+        }
 
-    (0, _createClass3.default)(Obfuscate, null, [{
-        key: 'oneBitAndShuffleUntilDone',
-        value: /*#__PURE__*/_regenerator2.default.mark(function oneBitAndShuffleUntilDone() {
-            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-            var result, revealed, obfuscated;
-            return _regenerator2.default.wrap(function oneBitAndShuffleUntilDone$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            result = [];
-                            revealed = 0;
-                            obfuscated = 0;
+        if (info.done) {
+          resolve(value);
+        } else {
+          return _promise2.default.resolve(value).then(function (value) {
+            step("next", value);
+          }, function (err) {
+            step("throw", err);
+          });
+        }
+      }
 
-
-                            bitmap.forEach(function (bit) {
-                                if (bit) {
-                                    obfuscated++;
-                                } else {
-                                    revealed++;
-                                }
-                            });
-
-                        case 4:
-                            if (!bitmap) {
-                                _context.next = 18;
-                                break;
-                            }
-
-                            // step
-                            obfuscated++;
-                            revealed--;
-
-                            // guard
-                            obfuscated = obfuscated > bitmap.length ? bitmap.length : obfuscated;
-                            revealed = revealed < 0 ? 0 : revealed;
-
-                            // resolve
-                            result = (0, _Shuffle2.default)(Array(revealed).fill(0).concat(Array(obfuscated).fill(1)));
-
-                            // yield/return
-
-                            if (!result.includes(0)) {
-                                _context.next = 15;
-                                break;
-                            }
-
-                            _context.next = 13;
-                            return result;
-
-                        case 13:
-                            _context.next = 16;
-                            break;
-
-                        case 15:
-                            return _context.abrupt('return', result);
-
-                        case 16:
-                            _context.next = 4;
-                            break;
-
-                        case 18:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, oneBitAndShuffleUntilDone, this);
-        })
-    }, {
-        key: 'oneBitAndShuffleForever',
-        value: /*#__PURE__*/_regenerator2.default.mark(function oneBitAndShuffleForever() {
-            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-            var result, revealed, obfuscated;
-            return _regenerator2.default.wrap(function oneBitAndShuffleForever$(_context2) {
-                while (1) {
-                    switch (_context2.prev = _context2.next) {
-                        case 0:
-                            result = [];
-                            revealed = 0;
-                            obfuscated = 0;
-
-
-                            bitmap.forEach(function (bit) {
-                                if (bit) {
-                                    obfuscated++;
-                                } else {
-                                    revealed++;
-                                }
-                            });
-
-                        case 4:
-                            if (!bitmap) {
-                                _context2.next = 14;
-                                break;
-                            }
-
-                            // step
-                            obfuscated++;
-                            revealed--;
-
-                            // guard
-                            obfuscated = obfuscated > bitmap.length ? bitmap.length : obfuscated;
-                            revealed = revealed < 0 ? 0 : revealed;
-
-                            // resolve
-                            result = (0, _Shuffle2.default)(Array(revealed).fill(0).concat(Array(obfuscated).fill(1)));
-
-                            // yield
-                            _context2.next = 12;
-                            return result;
-
-                        case 12:
-                            _context2.next = 4;
-                            break;
-
-                        case 14:
-                        case 'end':
-                            return _context2.stop();
-                    }
-                }
-            }, oneBitAndShuffleForever, this);
-        })
-    }, {
-        key: 'leftToRightUntilDone',
-        value: /*#__PURE__*/_regenerator2.default.mark(function leftToRightUntilDone() {
-            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-            var i;
-            return _regenerator2.default.wrap(function leftToRightUntilDone$(_context3) {
-                while (1) {
-                    switch (_context3.prev = _context3.next) {
-                        case 0:
-                            i = 0;
-
-                        case 1:
-                            if (!(i < bitmap.length)) {
-                                _context3.next = 12;
-                                break;
-                            }
-
-                            bitmap[i] = 1;
-
-                            if (!bitmap.includes(0)) {
-                                _context3.next = 8;
-                                break;
-                            }
-
-                            _context3.next = 6;
-                            return bitmap;
-
-                        case 6:
-                            _context3.next = 9;
-                            break;
-
-                        case 8:
-                            return _context3.abrupt('return', bitmap);
-
-                        case 9:
-                            i++;
-                            _context3.next = 1;
-                            break;
-
-                        case 12:
-                        case 'end':
-                            return _context3.stop();
-                    }
-                }
-            }, leftToRightUntilDone, this);
-        })
-    }, {
-        key: 'leftToRightForever',
-        value: /*#__PURE__*/_regenerator2.default.mark(function leftToRightForever() {
-            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-            var i;
-            return _regenerator2.default.wrap(function leftToRightForever$(_context4) {
-                while (1) {
-                    switch (_context4.prev = _context4.next) {
-                        case 0:
-                            i = 0;
-
-                        case 1:
-                            if (!(i < bitmap.length)) {
-                                _context4.next = 8;
-                                break;
-                            }
-
-                            bitmap[i] = 1;
-
-                            _context4.next = 5;
-                            return bitmap;
-
-                        case 5:
-                            i++;
-                            _context4.next = 1;
-                            break;
-
-                        case 8:
-                        case 'end':
-                            return _context4.stop();
-                    }
-                }
-            }, leftToRightForever, this);
-        })
-    }, {
-        key: 'all',
-        value: /*#__PURE__*/_regenerator2.default.mark(function all() {
-            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-            return _regenerator2.default.wrap(function all$(_context5) {
-                while (1) {
-                    switch (_context5.prev = _context5.next) {
-                        case 0:
-                            return _context5.abrupt('return', bitmap.fill(1));
-
-                        case 1:
-                        case 'end':
-                            return _context5.stop();
-                    }
-                }
-            }, all, this);
-        })
-    }]);
-    return Obfuscate;
-}();
-
-exports.default = Obfuscate;
+      return step("next");
+    });
+  };
+};
 
 /***/ }),
-/* 53 */
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(46);
+__webpack_require__(47);
+__webpack_require__(52);
+__webpack_require__(86);
+__webpack_require__(97);
+__webpack_require__(98);
+module.exports = __webpack_require__(0).Promise;
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(28);
+var defined = __webpack_require__(27);
+// true  -> String#at
+// false -> String#codePointAt
+module.exports = function (TO_STRING) {
+  return function (that, pos) {
+    var s = String(defined(that));
+    var i = toInteger(pos);
+    var l = s.length;
+    var a, b;
+    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
+    a = s.charCodeAt(i);
+    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+      ? TO_STRING ? s.charAt(i) : a
+      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+  };
+};
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var create = __webpack_require__(35);
+var descriptor = __webpack_require__(18);
+var setToStringTag = __webpack_require__(24);
+var IteratorPrototype = {};
+
+// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+__webpack_require__(8)(IteratorPrototype, __webpack_require__(2)('iterator'), function () { return this; });
+
+module.exports = function (Constructor, NAME, next) {
+  Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
+  setToStringTag(Constructor, NAME + ' Iterator');
+};
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP = __webpack_require__(5);
+var anObject = __webpack_require__(4);
+var getKeys = __webpack_require__(19);
+
+module.exports = __webpack_require__(7) ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var keys = getKeys(Properties);
+  var length = keys.length;
+  var i = 0;
+  var P;
+  while (length > i) dP.f(O, P = keys[i++], Properties[P]);
+  return O;
+};
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var addToUnscopables = __webpack_require__(84);
+var step = __webpack_require__(85);
+var Iterators = __webpack_require__(16);
+var toIObject = __webpack_require__(11);
+
+// 22.1.3.4 Array.prototype.entries()
+// 22.1.3.13 Array.prototype.keys()
+// 22.1.3.29 Array.prototype.values()
+// 22.1.3.30 Array.prototype[@@iterator]()
+module.exports = __webpack_require__(48)(Array, 'Array', function (iterated, kind) {
+  this._t = toIObject(iterated); // target
+  this._i = 0;                   // next index
+  this._k = kind;                // kind
+// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+}, function () {
+  var O = this._t;
+  var kind = this._k;
+  var index = this._i++;
+  if (!O || index >= O.length) {
+    this._t = undefined;
+    return step(1);
+  }
+  if (kind == 'keys') return step(0, index);
+  if (kind == 'values') return step(0, O[index]);
+  return step(0, [index, O[index]]);
+}, 'values');
+
+// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+Iterators.Arguments = Iterators.Array;
+
+addToUnscopables('keys');
+addToUnscopables('values');
+addToUnscopables('entries');
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports) {
+
+module.exports = function () { /* empty */ };
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports) {
+
+module.exports = function (done, value) {
+  return { value: value, done: !!done };
+};
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var LIBRARY = __webpack_require__(23);
+var global = __webpack_require__(1);
+var ctx = __webpack_require__(14);
+var classof = __webpack_require__(53);
+var $export = __webpack_require__(3);
+var isObject = __webpack_require__(6);
+var aFunction = __webpack_require__(17);
+var anInstance = __webpack_require__(87);
+var forOf = __webpack_require__(88);
+var speciesConstructor = __webpack_require__(54);
+var task = __webpack_require__(55).set;
+var microtask = __webpack_require__(93)();
+var newPromiseCapabilityModule = __webpack_require__(36);
+var perform = __webpack_require__(56);
+var promiseResolve = __webpack_require__(57);
+var PROMISE = 'Promise';
+var TypeError = global.TypeError;
+var process = global.process;
+var $Promise = global[PROMISE];
+var isNode = classof(process) == 'process';
+var empty = function () { /* empty */ };
+var Internal, newGenericPromiseCapability, OwnPromiseCapability, Wrapper;
+var newPromiseCapability = newGenericPromiseCapability = newPromiseCapabilityModule.f;
+
+var USE_NATIVE = !!function () {
+  try {
+    // correct subclassing with @@species support
+    var promise = $Promise.resolve(1);
+    var FakePromise = (promise.constructor = {})[__webpack_require__(2)('species')] = function (exec) {
+      exec(empty, empty);
+    };
+    // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
+    return (isNode || typeof PromiseRejectionEvent == 'function') && promise.then(empty) instanceof FakePromise;
+  } catch (e) { /* empty */ }
+}();
+
+// helpers
+var isThenable = function (it) {
+  var then;
+  return isObject(it) && typeof (then = it.then) == 'function' ? then : false;
+};
+var notify = function (promise, isReject) {
+  if (promise._n) return;
+  promise._n = true;
+  var chain = promise._c;
+  microtask(function () {
+    var value = promise._v;
+    var ok = promise._s == 1;
+    var i = 0;
+    var run = function (reaction) {
+      var handler = ok ? reaction.ok : reaction.fail;
+      var resolve = reaction.resolve;
+      var reject = reaction.reject;
+      var domain = reaction.domain;
+      var result, then;
+      try {
+        if (handler) {
+          if (!ok) {
+            if (promise._h == 2) onHandleUnhandled(promise);
+            promise._h = 1;
+          }
+          if (handler === true) result = value;
+          else {
+            if (domain) domain.enter();
+            result = handler(value);
+            if (domain) domain.exit();
+          }
+          if (result === reaction.promise) {
+            reject(TypeError('Promise-chain cycle'));
+          } else if (then = isThenable(result)) {
+            then.call(result, resolve, reject);
+          } else resolve(result);
+        } else reject(value);
+      } catch (e) {
+        reject(e);
+      }
+    };
+    while (chain.length > i) run(chain[i++]); // variable length - can't use forEach
+    promise._c = [];
+    promise._n = false;
+    if (isReject && !promise._h) onUnhandled(promise);
+  });
+};
+var onUnhandled = function (promise) {
+  task.call(global, function () {
+    var value = promise._v;
+    var unhandled = isUnhandled(promise);
+    var result, handler, console;
+    if (unhandled) {
+      result = perform(function () {
+        if (isNode) {
+          process.emit('unhandledRejection', value, promise);
+        } else if (handler = global.onunhandledrejection) {
+          handler({ promise: promise, reason: value });
+        } else if ((console = global.console) && console.error) {
+          console.error('Unhandled promise rejection', value);
+        }
+      });
+      // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
+      promise._h = isNode || isUnhandled(promise) ? 2 : 1;
+    } promise._a = undefined;
+    if (unhandled && result.e) throw result.v;
+  });
+};
+var isUnhandled = function (promise) {
+  return promise._h !== 1 && (promise._a || promise._c).length === 0;
+};
+var onHandleUnhandled = function (promise) {
+  task.call(global, function () {
+    var handler;
+    if (isNode) {
+      process.emit('rejectionHandled', promise);
+    } else if (handler = global.onrejectionhandled) {
+      handler({ promise: promise, reason: promise._v });
+    }
+  });
+};
+var $reject = function (value) {
+  var promise = this;
+  if (promise._d) return;
+  promise._d = true;
+  promise = promise._w || promise; // unwrap
+  promise._v = value;
+  promise._s = 2;
+  if (!promise._a) promise._a = promise._c.slice();
+  notify(promise, true);
+};
+var $resolve = function (value) {
+  var promise = this;
+  var then;
+  if (promise._d) return;
+  promise._d = true;
+  promise = promise._w || promise; // unwrap
+  try {
+    if (promise === value) throw TypeError("Promise can't be resolved itself");
+    if (then = isThenable(value)) {
+      microtask(function () {
+        var wrapper = { _w: promise, _d: false }; // wrap
+        try {
+          then.call(value, ctx($resolve, wrapper, 1), ctx($reject, wrapper, 1));
+        } catch (e) {
+          $reject.call(wrapper, e);
+        }
+      });
+    } else {
+      promise._v = value;
+      promise._s = 1;
+      notify(promise, false);
+    }
+  } catch (e) {
+    $reject.call({ _w: promise, _d: false }, e); // wrap
+  }
+};
+
+// constructor polyfill
+if (!USE_NATIVE) {
+  // 25.4.3.1 Promise(executor)
+  $Promise = function Promise(executor) {
+    anInstance(this, $Promise, PROMISE, '_h');
+    aFunction(executor);
+    Internal.call(this);
+    try {
+      executor(ctx($resolve, this, 1), ctx($reject, this, 1));
+    } catch (err) {
+      $reject.call(this, err);
+    }
+  };
+  // eslint-disable-next-line no-unused-vars
+  Internal = function Promise(executor) {
+    this._c = [];             // <- awaiting reactions
+    this._a = undefined;      // <- checked in isUnhandled reactions
+    this._s = 0;              // <- state
+    this._d = false;          // <- done
+    this._v = undefined;      // <- value
+    this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
+    this._n = false;          // <- notify
+  };
+  Internal.prototype = __webpack_require__(94)($Promise.prototype, {
+    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
+    then: function then(onFulfilled, onRejected) {
+      var reaction = newPromiseCapability(speciesConstructor(this, $Promise));
+      reaction.ok = typeof onFulfilled == 'function' ? onFulfilled : true;
+      reaction.fail = typeof onRejected == 'function' && onRejected;
+      reaction.domain = isNode ? process.domain : undefined;
+      this._c.push(reaction);
+      if (this._a) this._a.push(reaction);
+      if (this._s) notify(this, false);
+      return reaction.promise;
+    },
+    // 25.4.5.1 Promise.prototype.catch(onRejected)
+    'catch': function (onRejected) {
+      return this.then(undefined, onRejected);
+    }
+  });
+  OwnPromiseCapability = function () {
+    var promise = new Internal();
+    this.promise = promise;
+    this.resolve = ctx($resolve, promise, 1);
+    this.reject = ctx($reject, promise, 1);
+  };
+  newPromiseCapabilityModule.f = newPromiseCapability = function (C) {
+    return C === $Promise || C === Wrapper
+      ? new OwnPromiseCapability(C)
+      : newGenericPromiseCapability(C);
+  };
+}
+
+$export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
+__webpack_require__(24)($Promise, PROMISE);
+__webpack_require__(95)(PROMISE);
+Wrapper = __webpack_require__(0)[PROMISE];
+
+// statics
+$export($export.S + $export.F * !USE_NATIVE, PROMISE, {
+  // 25.4.4.5 Promise.reject(r)
+  reject: function reject(r) {
+    var capability = newPromiseCapability(this);
+    var $$reject = capability.reject;
+    $$reject(r);
+    return capability.promise;
+  }
+});
+$export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
+  // 25.4.4.6 Promise.resolve(x)
+  resolve: function resolve(x) {
+    return promiseResolve(LIBRARY && this === Wrapper ? $Promise : this, x);
+  }
+});
+$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(96)(function (iter) {
+  $Promise.all(iter)['catch'](empty);
+})), PROMISE, {
+  // 25.4.4.1 Promise.all(iterable)
+  all: function all(iterable) {
+    var C = this;
+    var capability = newPromiseCapability(C);
+    var resolve = capability.resolve;
+    var reject = capability.reject;
+    var result = perform(function () {
+      var values = [];
+      var index = 0;
+      var remaining = 1;
+      forOf(iterable, false, function (promise) {
+        var $index = index++;
+        var alreadyCalled = false;
+        values.push(undefined);
+        remaining++;
+        C.resolve(promise).then(function (value) {
+          if (alreadyCalled) return;
+          alreadyCalled = true;
+          values[$index] = value;
+          --remaining || resolve(values);
+        }, reject);
+      });
+      --remaining || resolve(values);
+    });
+    if (result.e) reject(result.v);
+    return capability.promise;
+  },
+  // 25.4.4.4 Promise.race(iterable)
+  race: function race(iterable) {
+    var C = this;
+    var capability = newPromiseCapability(C);
+    var reject = capability.reject;
+    var result = perform(function () {
+      forOf(iterable, false, function (promise) {
+        C.resolve(promise).then(capability.resolve, reject);
+      });
+    });
+    if (result.e) reject(result.v);
+    return capability.promise;
+  }
+});
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports) {
+
+module.exports = function (it, Constructor, name, forbiddenField) {
+  if (!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)) {
+    throw TypeError(name + ': incorrect invocation!');
+  } return it;
+};
+
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ctx = __webpack_require__(14);
+var call = __webpack_require__(89);
+var isArrayIter = __webpack_require__(90);
+var anObject = __webpack_require__(4);
+var toLength = __webpack_require__(43);
+var getIterFn = __webpack_require__(91);
+var BREAK = {};
+var RETURN = {};
+var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
+  var iterFn = ITERATOR ? function () { return iterable; } : getIterFn(iterable);
+  var f = ctx(fn, that, entries ? 2 : 1);
+  var index = 0;
+  var length, step, iterator, result;
+  if (typeof iterFn != 'function') throw TypeError(iterable + ' is not iterable!');
+  // fast case for arrays with default iterator
+  if (isArrayIter(iterFn)) for (length = toLength(iterable.length); length > index; index++) {
+    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+    if (result === BREAK || result === RETURN) return result;
+  } else for (iterator = iterFn.call(iterable); !(step = iterator.next()).done;) {
+    result = call(iterator, f, step.value, entries);
+    if (result === BREAK || result === RETURN) return result;
+  }
+};
+exports.BREAK = BREAK;
+exports.RETURN = RETURN;
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// call something on iterator step with safe closing on error
+var anObject = __webpack_require__(4);
+module.exports = function (iterator, fn, value, entries) {
+  try {
+    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
+  // 7.4.6 IteratorClose(iterator, completion)
+  } catch (e) {
+    var ret = iterator['return'];
+    if (ret !== undefined) anObject(ret.call(iterator));
+    throw e;
+  }
+};
+
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// check on default Array iterator
+var Iterators = __webpack_require__(16);
+var ITERATOR = __webpack_require__(2)('iterator');
+var ArrayProto = Array.prototype;
+
+module.exports = function (it) {
+  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
+};
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var classof = __webpack_require__(53);
+var ITERATOR = __webpack_require__(2)('iterator');
+var Iterators = __webpack_require__(16);
+module.exports = __webpack_require__(0).getIteratorMethod = function (it) {
+  if (it != undefined) return it[ITERATOR]
+    || it['@@iterator']
+    || Iterators[classof(it)];
+};
+
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports) {
+
+// fast apply, http://jsperf.lnkit.com/fast-apply/5
+module.exports = function (fn, args, that) {
+  var un = that === undefined;
+  switch (args.length) {
+    case 0: return un ? fn()
+                      : fn.call(that);
+    case 1: return un ? fn(args[0])
+                      : fn.call(that, args[0]);
+    case 2: return un ? fn(args[0], args[1])
+                      : fn.call(that, args[0], args[1]);
+    case 3: return un ? fn(args[0], args[1], args[2])
+                      : fn.call(that, args[0], args[1], args[2]);
+    case 4: return un ? fn(args[0], args[1], args[2], args[3])
+                      : fn.call(that, args[0], args[1], args[2], args[3]);
+  } return fn.apply(that, args);
+};
+
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(1);
+var macrotask = __webpack_require__(55).set;
+var Observer = global.MutationObserver || global.WebKitMutationObserver;
+var process = global.process;
+var Promise = global.Promise;
+var isNode = __webpack_require__(15)(process) == 'process';
+
+module.exports = function () {
+  var head, last, notify;
+
+  var flush = function () {
+    var parent, fn;
+    if (isNode && (parent = process.domain)) parent.exit();
+    while (head) {
+      fn = head.fn;
+      head = head.next;
+      try {
+        fn();
+      } catch (e) {
+        if (head) notify();
+        else last = undefined;
+        throw e;
+      }
+    } last = undefined;
+    if (parent) parent.enter();
+  };
+
+  // Node.js
+  if (isNode) {
+    notify = function () {
+      process.nextTick(flush);
+    };
+  // browsers with MutationObserver, except iOS Safari - https://github.com/zloirock/core-js/issues/339
+  } else if (Observer && !(global.navigator && global.navigator.standalone)) {
+    var toggle = true;
+    var node = document.createTextNode('');
+    new Observer(flush).observe(node, { characterData: true }); // eslint-disable-line no-new
+    notify = function () {
+      node.data = toggle = !toggle;
+    };
+  // environments with maybe non-completely correct, but existent Promise
+  } else if (Promise && Promise.resolve) {
+    var promise = Promise.resolve();
+    notify = function () {
+      promise.then(flush);
+    };
+  // for other environments - macrotask based on:
+  // - setImmediate
+  // - MessageChannel
+  // - window.postMessag
+  // - onreadystatechange
+  // - setTimeout
+  } else {
+    notify = function () {
+      // strange IE + webpack dev server bug - use .call(global)
+      macrotask.call(global, flush);
+    };
+  }
+
+  return function (fn) {
+    var task = { fn: fn, next: undefined };
+    if (last) last.next = task;
+    if (!head) {
+      head = task;
+      notify();
+    } last = task;
+  };
+};
+
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var hide = __webpack_require__(8);
+module.exports = function (target, src, safe) {
+  for (var key in src) {
+    if (safe && target[key]) target[key] = src[key];
+    else hide(target, key, src[key]);
+  } return target;
+};
+
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(1);
+var core = __webpack_require__(0);
+var dP = __webpack_require__(5);
+var DESCRIPTORS = __webpack_require__(7);
+var SPECIES = __webpack_require__(2)('species');
+
+module.exports = function (KEY) {
+  var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
+  if (DESCRIPTORS && C && !C[SPECIES]) dP.f(C, SPECIES, {
+    configurable: true,
+    get: function () { return this; }
+  });
+};
+
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ITERATOR = __webpack_require__(2)('iterator');
+var SAFE_CLOSING = false;
+
+try {
+  var riter = [7][ITERATOR]();
+  riter['return'] = function () { SAFE_CLOSING = true; };
+  // eslint-disable-next-line no-throw-literal
+  Array.from(riter, function () { throw 2; });
+} catch (e) { /* empty */ }
+
+module.exports = function (exec, skipClosing) {
+  if (!skipClosing && !SAFE_CLOSING) return false;
+  var safe = false;
+  try {
+    var arr = [7];
+    var iter = arr[ITERATOR]();
+    iter.next = function () { return { done: safe = true }; };
+    arr[ITERATOR] = function () { return iter; };
+    exec(arr);
+  } catch (e) { /* empty */ }
+  return safe;
+};
+
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// https://github.com/tc39/proposal-promise-finally
+
+var $export = __webpack_require__(3);
+var core = __webpack_require__(0);
+var global = __webpack_require__(1);
+var speciesConstructor = __webpack_require__(54);
+var promiseResolve = __webpack_require__(57);
+
+$export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
+  var C = speciesConstructor(this, core.Promise || global.Promise);
+  var isFunction = typeof onFinally == 'function';
+  return this.then(
+    isFunction ? function (x) {
+      return promiseResolve(C, onFinally()).then(function () { return x; });
+    } : onFinally,
+    isFunction ? function (e) {
+      return promiseResolve(C, onFinally()).then(function () { throw e; });
+    } : onFinally
+  );
+} });
+
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// https://github.com/tc39/proposal-promise-try
+var $export = __webpack_require__(3);
+var newPromiseCapability = __webpack_require__(36);
+var perform = __webpack_require__(56);
+
+$export($export.S, 'Promise', { 'try': function (callbackfn) {
+  var promiseCapability = newPromiseCapability.f(this);
+  var result = perform(callbackfn);
+  (result.e ? promiseCapability.reject : promiseCapability.resolve)(result.v);
+  return promiseCapability.promise;
+} });
+
+
+/***/ }),
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2288,177 +4466,732 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _regenerator = __webpack_require__(7);
+var _getPrototypeOf = __webpack_require__(100);
 
-var _regenerator2 = _interopRequireDefault(_regenerator);
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = __webpack_require__(0);
+var _classCallCheck2 = __webpack_require__(12);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(1);
+var _createClass2 = __webpack_require__(13);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _Shuffle = __webpack_require__(8);
+var _possibleConstructorReturn2 = __webpack_require__(104);
 
-var _Shuffle2 = _interopRequireDefault(_Shuffle);
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(116);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _Bamboozle2 = __webpack_require__(39);
+
+var _Bamboozle3 = _interopRequireDefault(_Bamboozle2);
+
+var _Obfuscate = __webpack_require__(58);
+
+var _Obfuscate2 = _interopRequireDefault(_Obfuscate);
+
+var _Reveal = __webpack_require__(59);
+
+var _Reveal2 = _interopRequireDefault(_Reveal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * all of the static generators take an array of zero or more length as an argument
- * and will yield or return an array of the same length
- *
- * the bitmap corresponds with a string of the same length, handled elsewhere, where
- * zeroes and ones indicate revealed and obfuscated characters
- *
- * a return statement is used when the bitmap is fully revealed in order to
- * end the generator *and* yield a defined value to the caller.
- *
- * you see, the MDN generator function example had a yield as the last line in a generator,
- * but that leads to ambiguity where you have to call the generator one more time
- * than necessary, then immediately recall the previous value. otherwise you're stuck
- * with the final yield which gives you { done: true, value: undefined } -_-
- *
- * on the other hand, a return statement in a generator will give you something
- * much more useful: { done: true, value: <a value!> } ^_^
- *
- * so given that, yields are used while looping and returns are used when finalizing
- */
-var Reveal = function () {
-    function Reveal() {
-        (0, _classCallCheck3.default)(this, Reveal);
+var BamboozleSpecial = function (_Bamboozle) {
+    (0, _inherits3.default)(BamboozleSpecial, _Bamboozle);
+
+    function BamboozleSpecial() {
+        (0, _classCallCheck3.default)(this, BamboozleSpecial);
+        return (0, _possibleConstructorReturn3.default)(this, (BamboozleSpecial.__proto__ || (0, _getPrototypeOf2.default)(BamboozleSpecial)).apply(this, arguments));
     }
 
-    (0, _createClass3.default)(Reveal, null, [{
-        key: 'oneBitAndShuffleUntilDone',
-        value: /*#__PURE__*/_regenerator2.default.mark(function oneBitAndShuffleUntilDone() {
-            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-            var result, revealed, obfuscated;
-            return _regenerator2.default.wrap(function oneBitAndShuffleUntilDone$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            result = [];
-                            revealed = 0;
-                            obfuscated = 0;
+    (0, _createClass3.default)(BamboozleSpecial, [{
+        key: "obfuscateOneBitAndShuffleForever",
 
-                            // first count up our ones/obfuscated and zeroes/revealed to initialize
-
-                            bitmap.forEach(function (bit) {
-                                // coercing a truthy here, which i guess leaves open the possibility
-                                // of non-binary bits if you want to get real creative down the line
-                                if (bit) {
-                                    obfuscated++;
-                                } else {
-                                    revealed++;
-                                }
-                            });
-
-                            // so long as we have an array to work with, stay in this loop
-
-                        case 4:
-                            if (!bitmap) {
-                                _context.next = 18;
-                                break;
-                            }
-
-                            obfuscated--;
-                            revealed++;
-
-                            // not the best guard statements, but i'm already upside down with
-                            // decrementing at the beginning of the loop... oh well...
-                            obfuscated = obfuscated < 0 ? 0 : obfuscated;
-                            revealed = revealed > bitmap.length ? bitmap.length : revealed;
-
-                            // a bit terse and ugly, but just building a new bitmap based on
-                            // our current count of obfuscated and revealed (obfuscation assumed as ones here)
-                            result = (0, _Shuffle2.default)(Array(revealed).fill(0).concat(Array(obfuscated).fill(1)));
-
-                            // finally, only return and indicate that we're done draining the ones
-                            // if that's actually true :P
-
-                            if (!(obfuscated > 0)) {
-                                _context.next = 15;
-                                break;
-                            }
-
-                            _context.next = 13;
-                            return result;
-
-                        case 13:
-                            _context.next = 16;
-                            break;
-
-                        case 15:
-                            return _context.abrupt('return', result);
-
-                        case 16:
-                            _context.next = 4;
-                            break;
-
-                        case 18:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, oneBitAndShuffleUntilDone, this);
-        })
+        // obfuscation loops
+        value: function obfuscateOneBitAndShuffleForever(duration, delay, speed) {
+            this.taskRunner.addLoop(_Obfuscate2.default.oneBitAndShuffleForever, duration, delay, speed);
+        }
     }, {
-        key: 'leftToRight',
-        value: /*#__PURE__*/_regenerator2.default.mark(function leftToRight() {
-            var bitmap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-            var i;
-            return _regenerator2.default.wrap(function leftToRight$(_context2) {
-                while (1) {
-                    switch (_context2.prev = _context2.next) {
-                        case 0:
-                            i = 0;
+        key: "obfuscateLeftToRightForever",
+        value: function obfuscateLeftToRightForever(duration, delay, speed) {
+            this.taskRunner.addLoop(_Obfuscate2.default.leftToRightForever, duration, delay, speed);
+        }
+    }, {
+        key: "obfuscateRightToLeftForever",
+        value: function obfuscateRightToLeftForever(duration, delay, speed) {
+            this.taskRunner.addLoop(_Obfuscate2.default.rightToLeftForever, duration, delay, speed);
+        }
+    }, {
+        key: "obfuscateInsideToOutsideForever",
+        value: function obfuscateInsideToOutsideForever(duration, delay, speed) {
+            this.taskRunner.addLoop(_Obfuscate2.default.insideToOutsideForever, duration, delay, speed);
+        }
+    }, {
+        key: "obfuscateOutsideToInsideForever",
+        value: function obfuscateOutsideToInsideForever(duration, delay, speed) {
+            this.taskRunner.addLoop(_Obfuscate2.default.outsideToInsideForever, duration, delay, speed);
+        }
 
-                        case 1:
-                            if (!(i < bitmap.length)) {
-                                _context2.next = 12;
-                                break;
-                            }
+        // obfuscation done-when-fully-obfuscated loops
 
-                            bitmap[i] = 0;
+    }, {
+        key: "obfuscateOneBitAndShuffleUntilDone",
+        value: function obfuscateOneBitAndShuffleUntilDone(delay, speed) {
+            this.taskRunner.addSingleRun(_Obfuscate2.default.oneBitAndShuffleUntilDone, delay, speed);
+        }
+    }, {
+        key: "obfuscateLeftToRightUntilDone",
+        value: function obfuscateLeftToRightUntilDone(delay, speed) {
+            this.taskRunner.addSingleRun(_Obfuscate2.default.leftToRightUntilDone, delay, speed);
+        }
+    }, {
+        key: "obfuscateRightToLeftUntilDone",
+        value: function obfuscateRightToLeftUntilDone(delay, speed) {
+            this.taskRunner.addSingleRun(_Obfuscate2.default.rightToLeftUntilDone, delay, speed);
+        }
+    }, {
+        key: "obfuscateInsideToOutsideUntilDone",
+        value: function obfuscateInsideToOutsideUntilDone(delay, speed) {
+            this.taskRunner.addSingleRun(_Obfuscate2.default.insideToOutsideUntilDone, delay, speed);
+        }
+    }, {
+        key: "obfuscateOutsideToInsideUntilDone",
+        value: function obfuscateOutsideToInsideUntilDone(delay, speed) {
+            this.taskRunner.addSingleRun(_Obfuscate2.default.outsideToInsideUntilDone, delay, speed);
+        }
 
-                            if (!bitmap.includes(1)) {
-                                _context2.next = 8;
-                                break;
-                            }
+        // reveals (all are done-when-fully-revealed loops
 
-                            _context2.next = 6;
-                            return bitmap;
+    }, {
+        key: "revealOneBitAndShuffleUntilDone",
+        value: function revealOneBitAndShuffleUntilDone(delay, speed) {
+            this.taskRunner.addSingleRun(_Reveal2.default.oneBitAndShuffleUntilDone, delay, speed);
+        }
+    }, {
+        key: "revealLeftToRight",
+        value: function revealLeftToRight(delay, speed) {
+            this.taskRunner.addSingleRun(_Reveal2.default.leftToRight, delay, speed);
+        }
+    }, {
+        key: "revealRightToLeft",
+        value: function revealRightToLeft(delay, speed) {
+            this.taskRunner.addSingleRun(_Reveal2.default.rightToLeft, delay, speed);
+        }
+    }, {
+        key: "revealInsideToOutside",
+        value: function revealInsideToOutside(delay, speed) {
+            this.taskRunner.addSingleRun(_Reveal2.default.insideToOutside, delay, speed);
+        }
+    }, {
+        key: "revealOutsideToInside",
+        value: function revealOutsideToInside(delay, speed) {
+            this.taskRunner.addSingleRun(_Reveal2.default.outsideToInside, delay, speed);
+        }
 
-                        case 6:
-                            _context2.next = 9;
-                            break;
+        // specials
+        // inversionWave(duration, delay, speed, width) {
+        //     this.taskRunner.addLoop(Special.inversionWave, duration, delay, speed);
+        // }
 
-                        case 8:
-                            return _context2.abrupt('return', bitmap);
-
-                        case 9:
-                            i++;
-                            _context2.next = 1;
-                            break;
-
-                        case 12:
-                            return _context2.abrupt('return', bitmap);
-
-                        case 13:
-                        case 'end':
-                            return _context2.stop();
-                    }
-                }
-            }, leftToRight, this);
-        })
     }]);
-    return Reveal;
-}();
+    return BamboozleSpecial;
+}(_Bamboozle3.default);
 
-exports.default = Reveal;
+exports.default = BamboozleSpecial;
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(101), __esModule: true };
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(102);
+module.exports = __webpack_require__(0).Object.getPrototypeOf;
+
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.9 Object.getPrototypeOf(O)
+var toObject = __webpack_require__(33);
+var $getPrototypeOf = __webpack_require__(51);
+
+__webpack_require__(103)('getPrototypeOf', function () {
+  return function getPrototypeOf(it) {
+    return $getPrototypeOf(toObject(it));
+  };
+});
+
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// most Object methods by ES6 should accept primitives
+var $export = __webpack_require__(3);
+var core = __webpack_require__(0);
+var fails = __webpack_require__(10);
+module.exports = function (KEY, exec) {
+  var fn = (core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
+};
+
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof2 = __webpack_require__(60);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
+};
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(106), __esModule: true };
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(47);
+__webpack_require__(52);
+module.exports = __webpack_require__(37).f('iterator');
+
+
+/***/ }),
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(108), __esModule: true };
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(109);
+__webpack_require__(46);
+__webpack_require__(114);
+__webpack_require__(115);
+module.exports = __webpack_require__(0).Symbol;
+
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// ECMAScript 6 symbols shim
+var global = __webpack_require__(1);
+var has = __webpack_require__(9);
+var DESCRIPTORS = __webpack_require__(7);
+var $export = __webpack_require__(3);
+var redefine = __webpack_require__(49);
+var META = __webpack_require__(110).KEY;
+var $fails = __webpack_require__(10);
+var shared = __webpack_require__(30);
+var setToStringTag = __webpack_require__(24);
+var uid = __webpack_require__(20);
+var wks = __webpack_require__(2);
+var wksExt = __webpack_require__(37);
+var wksDefine = __webpack_require__(38);
+var enumKeys = __webpack_require__(111);
+var isArray = __webpack_require__(112);
+var anObject = __webpack_require__(4);
+var isObject = __webpack_require__(6);
+var toIObject = __webpack_require__(11);
+var toPrimitive = __webpack_require__(26);
+var createDesc = __webpack_require__(18);
+var _create = __webpack_require__(35);
+var gOPNExt = __webpack_require__(113);
+var $GOPD = __webpack_require__(62);
+var $DP = __webpack_require__(5);
+var $keys = __webpack_require__(19);
+var gOPD = $GOPD.f;
+var dP = $DP.f;
+var gOPN = gOPNExt.f;
+var $Symbol = global.Symbol;
+var $JSON = global.JSON;
+var _stringify = $JSON && $JSON.stringify;
+var PROTOTYPE = 'prototype';
+var HIDDEN = wks('_hidden');
+var TO_PRIMITIVE = wks('toPrimitive');
+var isEnum = {}.propertyIsEnumerable;
+var SymbolRegistry = shared('symbol-registry');
+var AllSymbols = shared('symbols');
+var OPSymbols = shared('op-symbols');
+var ObjectProto = Object[PROTOTYPE];
+var USE_NATIVE = typeof $Symbol == 'function';
+var QObject = global.QObject;
+// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
+
+// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+var setSymbolDesc = DESCRIPTORS && $fails(function () {
+  return _create(dP({}, 'a', {
+    get: function () { return dP(this, 'a', { value: 7 }).a; }
+  })).a != 7;
+}) ? function (it, key, D) {
+  var protoDesc = gOPD(ObjectProto, key);
+  if (protoDesc) delete ObjectProto[key];
+  dP(it, key, D);
+  if (protoDesc && it !== ObjectProto) dP(ObjectProto, key, protoDesc);
+} : dP;
+
+var wrap = function (tag) {
+  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
+  sym._k = tag;
+  return sym;
+};
+
+var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function (it) {
+  return typeof it == 'symbol';
+} : function (it) {
+  return it instanceof $Symbol;
+};
+
+var $defineProperty = function defineProperty(it, key, D) {
+  if (it === ObjectProto) $defineProperty(OPSymbols, key, D);
+  anObject(it);
+  key = toPrimitive(key, true);
+  anObject(D);
+  if (has(AllSymbols, key)) {
+    if (!D.enumerable) {
+      if (!has(it, HIDDEN)) dP(it, HIDDEN, createDesc(1, {}));
+      it[HIDDEN][key] = true;
+    } else {
+      if (has(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
+      D = _create(D, { enumerable: createDesc(0, false) });
+    } return setSymbolDesc(it, key, D);
+  } return dP(it, key, D);
+};
+var $defineProperties = function defineProperties(it, P) {
+  anObject(it);
+  var keys = enumKeys(P = toIObject(P));
+  var i = 0;
+  var l = keys.length;
+  var key;
+  while (l > i) $defineProperty(it, key = keys[i++], P[key]);
+  return it;
+};
+var $create = function create(it, P) {
+  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
+};
+var $propertyIsEnumerable = function propertyIsEnumerable(key) {
+  var E = isEnum.call(this, key = toPrimitive(key, true));
+  if (this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return false;
+  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
+};
+var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
+  it = toIObject(it);
+  key = toPrimitive(key, true);
+  if (it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return;
+  var D = gOPD(it, key);
+  if (D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
+  return D;
+};
+var $getOwnPropertyNames = function getOwnPropertyNames(it) {
+  var names = gOPN(toIObject(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
+  } return result;
+};
+var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
+  var IS_OP = it === ObjectProto;
+  var names = gOPN(IS_OP ? OPSymbols : toIObject(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true)) result.push(AllSymbols[key]);
+  } return result;
+};
+
+// 19.4.1.1 Symbol([description])
+if (!USE_NATIVE) {
+  $Symbol = function Symbol() {
+    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
+    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
+    var $set = function (value) {
+      if (this === ObjectProto) $set.call(OPSymbols, value);
+      if (has(this, HIDDEN) && has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
+      setSymbolDesc(this, tag, createDesc(1, value));
+    };
+    if (DESCRIPTORS && setter) setSymbolDesc(ObjectProto, tag, { configurable: true, set: $set });
+    return wrap(tag);
+  };
+  redefine($Symbol[PROTOTYPE], 'toString', function toString() {
+    return this._k;
+  });
+
+  $GOPD.f = $getOwnPropertyDescriptor;
+  $DP.f = $defineProperty;
+  __webpack_require__(61).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(21).f = $propertyIsEnumerable;
+  __webpack_require__(32).f = $getOwnPropertySymbols;
+
+  if (DESCRIPTORS && !__webpack_require__(23)) {
+    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+  }
+
+  wksExt.f = function (name) {
+    return wrap(wks(name));
+  };
+}
+
+$export($export.G + $export.W + $export.F * !USE_NATIVE, { Symbol: $Symbol });
+
+for (var es6Symbols = (
+  // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
+  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
+).split(','), j = 0; es6Symbols.length > j;)wks(es6Symbols[j++]);
+
+for (var wellKnownSymbols = $keys(wks.store), k = 0; wellKnownSymbols.length > k;) wksDefine(wellKnownSymbols[k++]);
+
+$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
+  // 19.4.2.1 Symbol.for(key)
+  'for': function (key) {
+    return has(SymbolRegistry, key += '')
+      ? SymbolRegistry[key]
+      : SymbolRegistry[key] = $Symbol(key);
+  },
+  // 19.4.2.5 Symbol.keyFor(sym)
+  keyFor: function keyFor(sym) {
+    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
+    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
+  },
+  useSetter: function () { setter = true; },
+  useSimple: function () { setter = false; }
+});
+
+$export($export.S + $export.F * !USE_NATIVE, 'Object', {
+  // 19.1.2.2 Object.create(O [, Properties])
+  create: $create,
+  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+  defineProperty: $defineProperty,
+  // 19.1.2.3 Object.defineProperties(O, Properties)
+  defineProperties: $defineProperties,
+  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+  // 19.1.2.7 Object.getOwnPropertyNames(O)
+  getOwnPropertyNames: $getOwnPropertyNames,
+  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+  getOwnPropertySymbols: $getOwnPropertySymbols
+});
+
+// 24.3.2 JSON.stringify(value [, replacer [, space]])
+$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
+  var S = $Symbol();
+  // MS Edge converts symbol values to JSON as {}
+  // WebKit converts symbol values to JSON as null
+  // V8 throws on boxed symbols
+  return _stringify([S]) != '[null]' || _stringify({ a: S }) != '{}' || _stringify(Object(S)) != '{}';
+})), 'JSON', {
+  stringify: function stringify(it) {
+    var args = [it];
+    var i = 1;
+    var replacer, $replacer;
+    while (arguments.length > i) args.push(arguments[i++]);
+    $replacer = replacer = args[1];
+    if (!isObject(replacer) && it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
+    if (!isArray(replacer)) replacer = function (key, value) {
+      if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
+      if (!isSymbol(value)) return value;
+    };
+    args[1] = replacer;
+    return _stringify.apply($JSON, args);
+  }
+});
+
+// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(8)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+// 19.4.3.5 Symbol.prototype[@@toStringTag]
+setToStringTag($Symbol, 'Symbol');
+// 20.2.1.9 Math[@@toStringTag]
+setToStringTag(Math, 'Math', true);
+// 24.3.3 JSON[@@toStringTag]
+setToStringTag(global.JSON, 'JSON', true);
+
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var META = __webpack_require__(20)('meta');
+var isObject = __webpack_require__(6);
+var has = __webpack_require__(9);
+var setDesc = __webpack_require__(5).f;
+var id = 0;
+var isExtensible = Object.isExtensible || function () {
+  return true;
+};
+var FREEZE = !__webpack_require__(10)(function () {
+  return isExtensible(Object.preventExtensions({}));
+});
+var setMeta = function (it) {
+  setDesc(it, META, { value: {
+    i: 'O' + ++id, // object ID
+    w: {}          // weak collections IDs
+  } });
+};
+var fastKey = function (it, create) {
+  // return primitive with prefix
+  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return 'F';
+    // not necessary to add metadata
+    if (!create) return 'E';
+    // add missing metadata
+    setMeta(it);
+  // return object ID
+  } return it[META].i;
+};
+var getWeak = function (it, create) {
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return true;
+    // not necessary to add metadata
+    if (!create) return false;
+    // add missing metadata
+    setMeta(it);
+  // return hash weak collections IDs
+  } return it[META].w;
+};
+// add metadata on freeze-family methods calling
+var onFreeze = function (it) {
+  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
+  return it;
+};
+var meta = module.exports = {
+  KEY: META,
+  NEED: false,
+  fastKey: fastKey,
+  getWeak: getWeak,
+  onFreeze: onFreeze
+};
+
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// all enumerable object keys, includes symbols
+var getKeys = __webpack_require__(19);
+var gOPS = __webpack_require__(32);
+var pIE = __webpack_require__(21);
+module.exports = function (it) {
+  var result = getKeys(it);
+  var getSymbols = gOPS.f;
+  if (getSymbols) {
+    var symbols = getSymbols(it);
+    var isEnum = pIE.f;
+    var i = 0;
+    var key;
+    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
+  } return result;
+};
+
+
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.2.2 IsArray(argument)
+var cof = __webpack_require__(15);
+module.exports = Array.isArray || function isArray(arg) {
+  return cof(arg) == 'Array';
+};
+
+
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+var toIObject = __webpack_require__(11);
+var gOPN = __webpack_require__(61).f;
+var toString = {}.toString;
+
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+
+var getWindowNames = function (it) {
+  try {
+    return gOPN(it);
+  } catch (e) {
+    return windowNames.slice();
+  }
+};
+
+module.exports.f = function getOwnPropertyNames(it) {
+  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
+};
+
+
+/***/ }),
+/* 114 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(38)('asyncIterator');
+
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(38)('observable');
+
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _setPrototypeOf = __webpack_require__(117);
+
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+
+var _create = __webpack_require__(121);
+
+var _create2 = _interopRequireDefault(_create);
+
+var _typeof2 = __webpack_require__(60);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
+  }
+
+  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(118), __esModule: true };
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(119);
+module.exports = __webpack_require__(0).Object.setPrototypeOf;
+
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.19 Object.setPrototypeOf(O, proto)
+var $export = __webpack_require__(3);
+$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(120).set });
+
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+/* eslint-disable no-proto */
+var isObject = __webpack_require__(6);
+var anObject = __webpack_require__(4);
+var check = function (O, proto) {
+  anObject(O);
+  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
+};
+module.exports = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+    function (test, buggy, set) {
+      try {
+        set = __webpack_require__(14)(Function.call, __webpack_require__(62).f(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch (e) { buggy = true; }
+      return function setPrototypeOf(O, proto) {
+        check(O, proto);
+        if (buggy) O.__proto__ = proto;
+        else set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+  check: check
+};
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(122), __esModule: true };
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(123);
+var $Object = __webpack_require__(0).Object;
+module.exports = function create(P, D) {
+  return $Object.create(P, D);
+};
+
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(3);
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+$export($export.S, 'Object', { create: __webpack_require__(35) });
+
 
 /***/ })
 /******/ ]);
