@@ -1,70 +1,92 @@
 export default class TaskRunner {
-    constructor(bitmap = [], options = {}, listener = () => {}) {
+    constructor(bitmap, frequency, listener = () => {}) {
         this.bitmap = bitmap;
-        this.options = { ...options };
+        this.frequency = frequency;
         this.listener = listener;
         this.queue = [];
-        this.running = false;
-        this.interval = () => {};
+        this.stopped = true;
+        this.activeTask = {};
+
+        this.updateListener();
     }
 
-    add(strategyGenerator, duration = 0, delay = 0, speed = this.options.speed) {
-        this.queue.push({ strategyGenerator, duration, delay, speed });
+    add(strategyGenerator, duration = 0, delay = 0, frequency) {
+        this.queue.push({ strategyGenerator, duration, delay, frequency });
+        this.play();
+    }
 
-        if(!this.running) {
-            this.run(this.queue.shift());
+    addLoop(strategyGenerator, duration, delay, frequency) {
+        this.add(strategyGenerator, duration, delay, frequency);
+    }
+
+    addSingleRun(strategyGenerator, delay, frequency) {
+        this.add(strategyGenerator, false, delay, frequency);
+    }
+
+    play() {
+        console.log('stopped?', this.stopped);
+        if(this.stopped) {
+            this.activeTask = this.queue.shift();
+
+            this.run(this.activeTask).then(() => {
+                if(this.queue.length > 0) {
+                    this.activeTask = this.queue.shift();
+                    this.run(this.activeTask);
+                } else {
+                    console.log('out of tasks, stopping');
+                    this.stop();
+                }
+            });
         }
     }
 
-    addLoop(strategyGenerator, duration, delay, speed) {
-        this.add(strategyGenerator, duration, delay, speed);
-    }
+    run({ strategyGenerator, duration, delay, frequency }) {
+        delay = (delay) ? delay : 0;
+        let generator = strategyGenerator(this.bitmap);
 
-    addSingleRun(strategyGenerator, delay, speed) {
-        this.add(strategyGenerator, false, delay, speed);
-    }
+        this.stopped = false;
 
-    run({ strategyGenerator, duration, delay, speed }) {
-        this.running = true;
-        clearInterval(this.interval);
-
-        setTimeout(() => {
-            this.strategy = strategyGenerator(this.bitmap);
-            this.interval = setInterval(this.step.bind(this), speed);
-
+        return new Promise((resolve) => {
             if(duration) {
-                setTimeout(() =>  {
-                    clearInterval(this.interval);
-                    if(this.queue.length > 0) {
-                        this.run(this.queue.shift());
-                    } else {
-                        this.running = false;
-                    }
-                }, duration)
+                setTimeout(resolve, duration);
             }
 
+            setTimeout(async () => {
+                let value = [];
+                let done = false;
 
-        }, delay);
+                while(!done && !this.stopped) {
+                    let period  = (frequency) ? (1 / frequency) * 1000 : (1 / this.frequency) * 1000;
+                    ({ value, done } = await this.step(generator, period));
+
+                    if(value) {
+                        this.bitmap.setBitmap(value);
+                    }
+
+                    this.updateListener();
+                }
+
+                resolve();
+
+            }, delay);
+        });
     }
 
-    step() {
-        const { value: bitmap, done } = this.strategy.next();
-
-        if(done) {
-            this.stop();
-        }
-
-        if(bitmap) {
-            this.bitmap.setBitmap(bitmap);
-        }
-
-        this.listener(this.bitmap.render());
+    step(generator, period) {
+        return new Promise(resolve => {
+            const { value, done } = generator.next();
+            setTimeout(() => { resolve({ value, done }) }, period);
+        });
     }
 
     stop() {
-        clearInterval(this.interval);
-        this.running = false;
-        this.queue = [];
-        // that doesn't wipe out the queue
+        this.activeTask = {};
+        this.stopped = true;
+        // this.queue = []? wipe out queue on stop?
+        this.updateListener();
+    }
+
+    updateListener() {
+        this.listener(this.bitmap.render(), this.activeTask, this.queue);
     }
 }
