@@ -57,6 +57,13 @@ describe('TaskRunner', () => {
     });
 
     describe('#updateListener', () => {
-        it('should have tests...');
+        it('should send the current message, activeTask, and queue to the listener', (done) => {
+            new TaskRunner(testBitmap, 20, (message, activeTask, queue) => {
+                assert(message === resolution);
+                assert(activeTask instanceof Object);
+                assert(queue instanceof Array);
+                done();
+            });
+        });
     })
 });
