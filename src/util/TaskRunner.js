@@ -48,6 +48,7 @@ export default class TaskRunner {
 
         return new Promise((resolve) => {
             if(duration) {
+                // todo test
                 setTimeout(resolve, duration);
             }
 
@@ -83,7 +84,10 @@ export default class TaskRunner {
         this.activeTask = {};
         this.stopped = true;
         // this.queue = []? wipe out queue on stop?
-        this.updateListener();
+
+        // just no, this can cause infinite recursion if you try to call
+        // stop from the listener (which would probably be a decent use-case)
+        // this.updateListener();
     }
 
     updateListener() {
