@@ -68,7 +68,6 @@ export default class TaskRunner {
                 }
 
                 resolve();
-
             }, delay);
         });
     }
