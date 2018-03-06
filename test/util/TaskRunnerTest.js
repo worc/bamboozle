@@ -34,7 +34,7 @@ describe('TaskRunner', () => {
         });
 
         it('should emit the initial state when constructed', (done) => {
-            let listener = (message) => {
+            let listener = ({ message }) => {
                 assert(message === 'test');
                 done();
             };
@@ -58,10 +58,11 @@ describe('TaskRunner', () => {
 
     describe('#updateListener', () => {
         it('should send the current message, activeTask, and queue to the listener', (done) => {
-            new TaskRunner(testBitmap, 20, (message, activeTask, queue) => {
+            new TaskRunner(testBitmap, 20, ({ message, activeTask, queue, frequency }) => {
                 assert(message === resolution);
                 assert(activeTask instanceof Object);
                 assert(queue instanceof Array);
+                assert(frequency === 20);
                 done();
             });
         });

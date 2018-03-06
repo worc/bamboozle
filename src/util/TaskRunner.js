@@ -91,6 +91,11 @@ export default class TaskRunner {
     }
 
     updateListener() {
-        this.listener(this.bitmap.render(), this.activeTask, this.queue);
+        this.listener({
+            message: this.bitmap.render(),
+            activeTask: this.activeTask,
+            queue: this.queue,
+            frequency: this.frequency
+        });
     }
 }
