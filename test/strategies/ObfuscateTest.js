@@ -53,4 +53,12 @@ describe('Obfuscate', () => {
             assert(!generator.next().done);
         });
     });
+
+    describe('#rightToLeftForever', () => {
+        it('should have at least a smoke test...');
+    });
+
+    describe('#rightToLeftUntilDone', () => {
+        it('should have at least a smoke test...');
+    });
 });
