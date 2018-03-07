@@ -6,6 +6,7 @@ export default class TaskRunner {
         this.queue = [];
         this.stopped = true;
         this.activeTask = {};
+        this.handbrakes = [];
 
         this.updateListener();
     }
@@ -26,10 +27,12 @@ export default class TaskRunner {
     play() {
         console.log('stopped?', this.stopped);
         if(this.stopped) {
+            this.stopped = false;
             this.activeTask = this.queue.shift();
 
             this.run(this.activeTask).then(() => {
                 if(this.queue.length > 0) {
+                    console.log('have tasks, running');
                     this.activeTask = this.queue.shift();
                     this.run(this.activeTask);
                 } else {
@@ -44,9 +47,13 @@ export default class TaskRunner {
         delay = (delay) ? delay : 0;
         let generator = strategyGenerator(this.bitmap);
 
-        this.stopped = false;
-
         return new Promise((resolve) => {
+            let stopped = false;
+            this.handbrakes.push(() => {
+                debugger;
+                stopped = true;
+            });
+
             if(duration) {
                 // todo test
                 setTimeout(resolve, duration);
@@ -56,7 +63,7 @@ export default class TaskRunner {
                 let value = [];
                 let done = false;
 
-                while(!done && !this.stopped) {
+                while(!done && !stopped) {
                     let period  = (frequency) ? (1 / frequency) * 1000 : (1 / this.frequency) * 1000;
                     ({ value, done } = await this.step(generator, period));
 
@@ -80,13 +87,23 @@ export default class TaskRunner {
     }
 
     stop() {
-        this.activeTask = {};
+        // pull the handbrake on any active loops, and update the stopped flag
+        this.handbrakes.forEach((brake) => {
+            brake();
+        });
         this.stopped = true;
-        // this.queue = []? wipe out queue on stop?
+
+        // clear out state, as opposed to a potential pause() function which would
+        // leave this state ready to restart
+        this.activeTask = {};
+        this.queue = [];
+        this.handbrakes = [];
 
         // just no, this can cause infinite recursion if you try to call
         // stop from the listener (which would probably be a decent use-case)
         // this.updateListener();
+
+        return this;
     }
 
     updateListener() {
