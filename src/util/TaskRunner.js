@@ -14,8 +14,8 @@ export default class TaskRunner {
 
     add(strategyGenerator, duration = 0, delay = 0, frequency) {
         this.queue.push(new Task({
-            generator: strategyGenerator,
-            listener: this.update,
+            generator: strategyGenerator(this.bitmap),
+            listener: this.update.bind(this),
             duration,
             delay,
             frequency
