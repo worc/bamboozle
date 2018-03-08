@@ -19,14 +19,14 @@ describe('Bamboozle', () => {
         });
 
         it('should message the listener with the initial state', (done) => {
-            new Bamboozle(message => {
-                assert(message === resolution);
+            new Bamboozle(( { message }) => {
+                assert(message === resolution, `message: ${message}, resolution: ${resolution}`);
                 done();
             }, resolution, { startBaffled: false });
         });
 
         it('should message the listener with the initial baffled state', (done) => {
-            new Bamboozle(message => {
+            new Bamboozle(({ message })=> {
                 //                 'hello world!'
                 assert(message === '***** ******');
                 done();
@@ -37,15 +37,15 @@ describe('Bamboozle', () => {
     describe('#once', () => {
         it('should send the listener a fully obfuscated message', (done) => {
             let count = 0;
-            let bam = new Bamboozle(message => {
+            let bam = new Bamboozle(({ message }) => {
                 count++;
                 if(count === 1) {
                     // initialization is without baffling
-                    assert(message === 'hello world!');
+                    assert(message === 'hello world!', `initial message: ${message}`);
                 } else if (count === 2) {
                     // but calling .once() triggers another message, this time baffled:
                     //                 'hello world!'
-                    assert(message === '***** ******');
+                    assert(message === '***** ******', `baffled message: ${message}`);
                     done();
                 }
             }, resolution, { startBaffled: false, characters: '*' });
@@ -57,7 +57,7 @@ describe('Bamboozle', () => {
     describe('#start', () => {
         it('should obfuscate the message indefinitely even after fully obfuscating', (done) => {
             let count = 0;
-            let bam = new Bamboozle(message => {
+            let bam = new Bamboozle(({ message }) => {
                 assert(!message.includes('*'));
 
                 if(count === 2) {
@@ -122,7 +122,7 @@ describe('Bamboozle', () => {
             let startTime = new Date();
             let count = 0;
 
-            let bam = new Bamboozle(message => {
+            let bam = new Bamboozle(({ message }) => {
                 // skip initial message from constructor
                 if(count > 0) {
                     let runTime = new Date() - startTime;
@@ -154,7 +154,7 @@ describe('Bamboozle', () => {
             let startTime = new Date();
             let count = 0;
 
-            let bam = new Bamboozle(message => {
+            let bam = new Bamboozle(({ message }) => {
                 // skip initial message on initialization
                 if(count > 0) {
                     let runTime = new Date() - startTime;
