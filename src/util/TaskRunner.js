@@ -1,3 +1,5 @@
+import Task from './Task';
+
 export default class TaskRunner {
     constructor(bitmap, frequency, listener = () => {}) {
         this.bitmap = bitmap;
@@ -7,77 +9,37 @@ export default class TaskRunner {
         this.stopped = true;
         this.activeTask = {};
 
-        this.updateListener();
+        this.update({ value: this.bitmap.array });
     }
 
     add(strategyGenerator, duration = 0, delay = 0, frequency) {
-        this.queue.push({ strategyGenerator, duration, delay, frequency });
+        this.queue.push(new Task({
+            generator: strategyGenerator,
+            listener: this.update,
+            duration,
+            delay,
+            frequency
+        }));
+
         this.play();
     }
 
     addLoop(strategyGenerator, duration, delay, frequency) {
         this.add(strategyGenerator, duration, delay, frequency);
+        return this;
     }
 
     addSingleRun(strategyGenerator, delay, frequency) {
         this.add(strategyGenerator, false, delay, frequency);
+        return this;
     }
 
     play() {
-        console.log('stopped?', this.stopped);
-        if(this.stopped) {
+        if(this.stopped && this.queue.length > 0) {
             this.activeTask = this.queue.shift();
-
-            this.run(this.activeTask).then(() => {
-                if(this.queue.length > 0) {
-                    this.activeTask = this.queue.shift();
-                    this.run(this.activeTask);
-                } else {
-                    console.log('out of tasks, stopping');
-                    this.stop();
-                }
-            });
+            this.activeTask.run().then(this.play.bind(this));
         }
-    }
-
-    run({ strategyGenerator, duration, delay, frequency }) {
-        delay = (delay) ? delay : 0;
-        let generator = strategyGenerator(this.bitmap);
-
-        this.stopped = false;
-
-        return new Promise((resolve) => {
-            if(duration) {
-                // todo test
-                setTimeout(resolve, duration);
-            }
-
-            setTimeout(async () => {
-                let value = [];
-                let done = false;
-
-                while(!done && !this.stopped) {
-                    let period  = (frequency) ? (1 / frequency) * 1000 : (1 / this.frequency) * 1000;
-                    ({ value, done } = await this.step(generator, period));
-
-                    if(value) {
-                        this.bitmap.setBitmap(value);
-                    }
-
-                    this.updateListener();
-                }
-
-                resolve();
-
-            }, delay);
-        });
-    }
-
-    step(generator, period) {
-        return new Promise(resolve => {
-            const { value, done } = generator.next();
-            setTimeout(() => { resolve({ value, done }) }, period);
-        });
+        console.log('no tasks left');
     }
 
     stop() {
@@ -90,7 +52,11 @@ export default class TaskRunner {
         // this.updateListener();
     }
 
-    updateListener() {
+    update({ value }) {
+        if(value) {
+            this.bitmap.setBitmap(value);
+        }
+
         this.listener({
             message: this.bitmap.render(),
             activeTask: this.activeTask,

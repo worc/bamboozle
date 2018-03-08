@@ -3,14 +3,6 @@ import TaskRunner from '../../src/util/TaskRunner';
 import Bitmap from '../../src/util/Bitmap';
 
 const resolution = 'hello world!';
-const testGenerator = {
-    next: () => {
-        return {
-            value: [],
-            done: true
-        }
-    }
-};
 
 describe('TaskRunner', () => {
     let testBitmap = new Bitmap(resolution);
@@ -18,18 +10,16 @@ describe('TaskRunner', () => {
     describe('#constructor', () => {
         let taskRunner = new TaskRunner(testBitmap);
 
-        it('should have defaults', () => {
+        it('should have a default queue and start stopped', () => {
             assert(taskRunner.queue instanceof Array);
             assert(taskRunner.stopped === true);
         });
 
-        it('should have the add, addLoop, addSingleRun, play, run, step, stop endpoints', () => {
+        it('should have the add, addLoop, addSingleRun, play, stop endpoints', () => {
             assert(taskRunner.add);
             assert(taskRunner.addLoop);
             assert(taskRunner.addSingleRun);
             assert(taskRunner.play);
-            assert(taskRunner.run);
-            assert(taskRunner.step);
             assert(taskRunner.stop);
         });
 
@@ -39,21 +29,12 @@ describe('TaskRunner', () => {
                 done();
             };
 
-            let taskRunner = new TaskRunner(new Bitmap('test'), 20, listener);
+            new TaskRunner(new Bitmap('test'), 20, listener);
         });
     });
 
-    describe('#step', () => {
-        let testTaskRunner = new TaskRunner(testBitmap);
-
-       it('should return a promise', (done) => {
-           assert(testTaskRunner.step(testGenerator, 100) instanceof Promise);
-           done();
-       });
-    });
-
     describe('#stop', () => {
-        it('causes infinite recursion if it calls .updateListener() and that listener also calls .stop()');
+        it('causes infinite recursion if it calls .update() and the listener in turn calls .stop(), SO DO NOT ADD AN UPDATE CALL');
     });
 
     describe('#updateListener', () => {
