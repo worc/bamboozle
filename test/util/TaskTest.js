@@ -32,7 +32,6 @@ describe('Task', () => {
 
             let test = new Task(args);
             test.run().then(() => {
-                console.log('test done?');
                 done();
             });
         });
@@ -51,7 +50,6 @@ describe('Task', () => {
             const startTime = new Date();
 
             test.run().then(() => {
-                console.log('resolved');
                 const timeElapsed = new Date() - startTime;
                 // 50ms delay, and no time for any cycle,
                 assert(timeElapsed > 90 && timeElapsed < 110, `timeElapsed: ${timeElapsed}`);
