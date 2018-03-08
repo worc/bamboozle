@@ -37,7 +37,7 @@ export default class Task {
 
         while(!this.stopped && !done) {
             ({ value, done } = await this.step(generator, this.period));
-            listener({ value, done });
+            listener({ value });
         }
     }
 
