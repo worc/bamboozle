@@ -43,8 +43,13 @@ export default class TaskRunner {
     }
 
     stop() {
-        this.activeTask = {};
-        this.stopped = true;
+        if(this.activeTask.stop) {
+            this.activeTask.stop().then(() => {
+                this.activeTask = {};
+                this.stopped = true;
+            });
+
+        }
         // this.queue = []? wipe out queue on stop?
 
         // just no, this can cause infinite recursion if you try to call
