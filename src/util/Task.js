@@ -12,23 +12,27 @@ export default class Task {
 
     run() {
         let { generator, duration, delay, listener } = this.props;
+        let promises = [];
+
         delay = (delay) ? delay : 0;
 
-        this.task = new Promise( resolve => {
-            this.handbrake = resolve;
-            if(duration) {
-                setTimeout(() => {
-                    this.stop();
+        if(duration) {
+            promises.push(new Promise( resolve => {
+                this.durationResolve = resolve;
+                this.durationTimeout = setTimeout(() => {
+                    this.stop().then(resolve);
                 }, duration);
-            }
+            }))
+        }
 
+        promises.push(new Promise( resolve => {
+            this.delayResolve = resolve;
             this.delayTimeout = setTimeout(() => {
-                // todo catch errors?
-                this.start(generator, listener).then(this.stop.bind(this));
+                this.start(generator, listener).then(resolve);
             }, delay);
-        });
+        }));
 
-        return this.task;
+        return Promise.race(promises).then(this.stop.bind(this));
     }
 
     async start(generator, listener) {
@@ -49,21 +53,31 @@ export default class Task {
     }
 
     stop() {
-        // remove the inner delay task, doesn't work in node,
-        // the promise within the delayTimeout holds the event loop open
-        clearTimeout(this.delayTimeout);
-
         return new Promise( resolve => {
-            // resolve stop only after the task is shut down
-            this.task.then(resolve);
-
             // switch the flag that the delay's internal loop is
-            // looking for to break on, this closes the loop which
+            // looking to break on, this closes the loop which
             // can get orphaned when the enclosing promise resolves
             this.stopped = true;
 
-            // call the task's resolve function and force it to stop
-            this.handbrake();
+            // clear any outstanding timeouts, as in either the task
+            // inside the delay is done and the duration is still around,
+            // or the duration is done and the task inside the delay
+            // is still spinning
+            clearTimeout(this.durationTimeout);
+            clearTimeout(this.delayTimeout);
+
+            // force unresolved promises to resolve
+            // values are passed to the listener in a side-effect way
+            // so we don't have to pass any values here to the resolve
+            if(this.durationResolve) {
+                this.durationResolve();
+            }
+
+            if(this.delayResolve) {
+                this.delayResolve();
+            }
+
+            resolve();
         });
     }
 }

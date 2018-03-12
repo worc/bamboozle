@@ -20,7 +20,7 @@ describe('Task', () => {
             assert(new Task(args).run().then(done) instanceof Promise);
         });
 
-        it('should resolve after a duration, even if the generator is never done', (done) => {
+        it('should resolve and stop after a duration, even if the generator is never done', (done) => {
             const args = {
                 generator: {
                     next: sinon.stub().withArgs().returns({ value: [], done: false})
@@ -31,12 +31,10 @@ describe('Task', () => {
             };
 
             let test = new Task(args);
-            test.run().then(() => {
-                done();
-            });
+            test.run().then(done);
         });
 
-        it('should run after a delay if one is provided', (done) => {
+        it('should run after a delay and then stop if one is provided', (done) => {
             const args = {
                 generator: {
                     next: sinon.stub().withArgs().returns({ value: [], done: true})
@@ -48,6 +46,7 @@ describe('Task', () => {
 
             let test = new Task(args);
             const startTime = new Date();
+            console.log(startTime);
 
             test.run().then(() => {
                 const timeElapsed = new Date() - startTime;
