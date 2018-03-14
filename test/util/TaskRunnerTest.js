@@ -10,9 +10,9 @@ describe('TaskRunner', () => {
     describe('#constructor', () => {
         let taskRunner = new TaskRunner(testBitmap);
 
-        it('should have a default queue and start stopped', () => {
+        it('should have a default queue and running set to false', () => {
             assert(taskRunner.queue instanceof Array);
-            assert(taskRunner.stopped === true);
+            assert(taskRunner.running === false);
         });
 
         it('should have the add, addLoop, addSingleRun, play, stop endpoints', () => {
