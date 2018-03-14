@@ -1,7 +1,7 @@
 export default class Task {
     constructor(options) {
-        let { generator, duration, delay, listener } = options;
-        this.props = { generator, duration, delay, listener};
+        let { displayName, generator, duration, delay, listener } = options;
+        this.props = { displayName, generator, duration, delay, listener };
         this.stopped = false;
         this.frequency = options.frequency;
     }
@@ -40,15 +40,15 @@ export default class Task {
         let done = false;
 
         while(!this.stopped && !done) {
-            ({ value, done } = await this.step(generator, this.period));
+            ({ value, done } = await this.step(generator));
             listener({ value });
         }
     }
 
-    step(generator, period) {
+    step(generator) {
         return new Promise( resolve => {
             const { value, done } = generator.next();
-            setTimeout(() => { resolve({ value, done })}, period);
+            setTimeout(() => { resolve({ value, done })}, this.period);
         });
     }
 
