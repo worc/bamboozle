@@ -6,14 +6,21 @@ export default class TaskRunner {
         this.frequency = frequency;
         this.listener = listener;
         this.queue = [];
-        this.stopped = true;
+        this.running = false;
         this.activeTask = {};
 
         this.update({ value: this.bitmap.array });
     }
 
-    add(strategyGenerator, duration = 0, delay = 0, frequency) {
+    setFrequency(frequency) {
+        this.frequency = frequency;
+        this.activeTask.frequency = frequency;
+        // this.queue.forEach(task => { task.frequency = frequency; } );
+    }
+
+    add(strategyGenerator, duration = 0, delay = 0, frequency = this.frequency) {
         this.queue.push(new Task({
+            displayName: strategyGenerator.displayName,
             generator: strategyGenerator(this.bitmap),
             listener: this.update.bind(this),
             duration,
@@ -35,7 +42,8 @@ export default class TaskRunner {
     }
 
     play() {
-        if(this.stopped && this.queue.length > 0) {
+        if(!this.running && this.queue.length > 0) {
+            this.running = true;
             this.activeTask = this.queue.shift();
             this.activeTask.run().then(this.play.bind(this));
         }
@@ -46,7 +54,7 @@ export default class TaskRunner {
         if(this.activeTask.stop) {
             this.activeTask.stop().then(() => {
                 this.activeTask = {};
-                this.stopped = true;
+                this.running = false;
             });
 
         }
