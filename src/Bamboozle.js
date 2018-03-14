@@ -11,7 +11,6 @@ export default class Bamboozle {
             characters = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz~!@#$%^&*()-+=[]{}|;:,./<>?',
             exclude = ' ',
             startBaffled = true,
-            // todo change speed to "frequency" or "pace"?
             frequency = 20,
         } = {}
     ) {
@@ -26,7 +25,14 @@ export default class Bamboozle {
         this.taskRunner = new TaskRunner(this.bitmap, this.options.frequency, listener);
 
         this.obfuscationStrategy = Obfuscate.oneBitAndShuffleForever;
+        // just filthy, shameful, but between manglers and JS being what it is,
+        // idk how else to grab the class name for debugging/demo purposes
+        // todo bury this dirty hack in a setter?
+        this.obfuscationStrategy.displayName = Obfuscate.getClassName() + this.obfuscationStrategy.name[0].toUpperCase() + this.obfuscationStrategy.name.slice(1); // oof
+
         this.revealStrategy = Reveal.oneBitAndShuffleUntilDone;
+        // todo bury this dirty hack in a setter
+        this.revealStrategy.displayName = Reveal.getClassName() + this.revealStrategy.name[0].toUpperCase() + this.revealStrategy.name.slice(1);
     }
 
     once() {
@@ -43,7 +49,7 @@ export default class Bamboozle {
 
     set(options) {
         this.options = { ...this.options, ...options };
-        this.taskRunner.frequency = this.options.frequency;
+        this.taskRunner.setFrequency(this.options.frequency);
         this.bitmap.setOptions({
             exclude: this.options.exclude,
             characters: this.options.characters
@@ -59,13 +65,6 @@ export default class Bamboozle {
 
         // calculate the frequency of updates needed to complete a full reveal on time
         let frequency = (this.bitmap.resolution.length > 0 && duration > 0) ? 1000 / (duration / this.bitmap.resolution.length) : this.options.frequency;
-
-        // console.log('reveal frequency', frequency);
-        // console.log('reveal period', (1 / frequency) * 1000);
-        // todo, definitely change the term to "pace" or something because that inequality check looks
-        // todo, and sounds backwards when you read it out loud...
-        // todo change speed to tempo and invert (1/tempo) at a deeper the term so that it reads better at this higher level
-        // let clampedSpeed = (speed > this.options.speed) ? this.options.speed : speed;
 
         // duration sent to task runner is 0 or falsy so that no matter what the reveal
         // will complete, either at a pace set to match the requested duration or
