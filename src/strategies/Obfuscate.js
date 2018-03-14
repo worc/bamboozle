@@ -13,6 +13,10 @@ import shuffle from '../util/Shuffle';
  * loops that continue yielding after the bitmap is full up are suffixed with Forever.
  */
 export default class Obfuscate {
+    static getClassName() {
+        return 'Obfuscate';
+    }
+
     static* oneBitAndShuffleUntilDone(bitmap) {
         let result = [];
         let revealed = 0;
@@ -48,6 +52,8 @@ export default class Obfuscate {
     }
 
     static* oneBitAndShuffleForever(bitmap) {
+
+
         let result = [];
         let revealed = 0;
         let obfuscated = 0;

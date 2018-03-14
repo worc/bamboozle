@@ -22,6 +22,10 @@ import Bitmap from '../util/Bitmap';
  * so given that, yields are used while looping and returns are used when finalizing
  */
 export default class Reveal {
+    static getClassName() {
+        return 'Reveal';
+    }
+
     static* oneBitAndShuffleUntilDone(bitmap = []) {
         let result = [];
         let revealed = 0;
