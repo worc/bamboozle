@@ -10,7 +10,7 @@ module.exports = {
         path: __dirname + '/dist',
         filename: `${packageJSON.name}.min.js`,
         library: `${packageJSON.name}`,
-        // libraryTarget: 'umd'
+        libraryTarget: 'umd'
     },
     module: {
         loaders: [{
