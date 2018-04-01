@@ -66,6 +66,35 @@ export default class Reveal {
         }
     }
 
+    static* nBitsAndShuffleUntilDone(bitmap, bitsPerCycle) {
+        let result = [];
+        let revealed = 0;
+        let obfuscated = 0;
+
+        bitmap.forEach(bit => {
+            // coercing a truthy here, which i guess leaves open the possibility
+            // of non-binary bits if you want to get real creative down the line
+            if (bit) {
+                obfuscated++;
+            } else {
+                revealed++;
+            }
+        });
+
+        while(bitmap) {
+            obfuscated = Math.max(obfuscated - bitsPerCycle, 0);
+            revealed = Math.min(revealed + bitsPerCycle, bitmap.length);
+
+            result = shuffle(Array(revealed).fill(0).concat(Array(obfuscated).fill(1)));
+
+            if (obfuscated > 0) {
+                yield result;
+            } else {
+                return result;
+            }
+        }
+    }
+
     static* leftToRight(bitmap = Bitmap) {
         // cloning the array since native class extensions don't
         // work right now, i'm sure this is cleaner in babel 7

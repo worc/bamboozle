@@ -25,6 +25,21 @@ describe('Reveal', () =>{
         });
     });
 
+    describe('#nBitsAndShuffleUntilDone', () => {
+        it('should reveal two bits at a time when given n of 2', () => {
+            let testArray = [1, 1, 1, 1];
+            let generator = Reveal.nBitsAndShuffleUntilDone(testArray, 2);
+            let step = generator.next();
+
+            assert(step.value.join('').match(/1/g).length === 2, 'first yield revealed two bits');
+            assert(step.done === false, 'not done yet');
+
+            step = generator.next();
+            assert(step.value.join('').match(/1/g) === null, 'second step reveals all');
+            assert(step.done === true, 'since all is revealed, we are now done');
+        })
+    });
+
     describe('#leftToRight', () => {
         it('should return an empty array when given an empty array', () => {
             let testArray = [];
