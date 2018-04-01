@@ -30,7 +30,7 @@ export default class Bamboozle {
         // todo bury this dirty hack in a setter?
         this.obfuscationStrategy.displayName = Obfuscate.getClassName() + this.obfuscationStrategy.name[0].toUpperCase() + this.obfuscationStrategy.name.slice(1); // oof
 
-        this.revealStrategy = Reveal.oneBitAndShuffleUntilDone;
+        this.revealStrategy = Reveal.nBitsAndShuffleUntilDone;
         // todo bury this dirty hack in a setter
         this.revealStrategy.displayName = Reveal.getClassName() + this.revealStrategy.name[0].toUpperCase() + this.revealStrategy.name.slice(1);
     }
@@ -61,14 +61,27 @@ export default class Bamboozle {
     }
 
     reveal(duration = 0, delay) {
-        this.stop();
+        setTimeout(() => {
+            this.stop();
 
-        // calculate the frequency of updates needed to complete a full reveal on time
-        let frequency = (this.bitmap.resolution.length > 0 && duration > 0) ? 1000 / (duration / this.bitmap.resolution.length) : this.options.frequency;
+            // calculate the frequency of updates needed to complete a full reveal on time
+            // let frequency = (this.bitmap.resolution.length > 0 && duration > 0) ? 1000 / (duration / this.bitmap.resolution.length) : this.options.frequency;
 
-        // duration sent to task runner is 0 or falsy so that no matter what the reveal
-        // will complete, either at a pace set to match the requested duration or
-        // at the default speed in options
-        this.taskRunner.addSingleRun(this.revealStrategy, delay, frequency);
+            // flip frequency to a period
+            let period = (1 / this.options.frequency) * 1000;
+
+            // calculate the number of steps available at current frequency and duration
+            // zero here being a falsy and meaning indefinite or infinite
+            let steps = (duration > 0) ? duration / period : 0;
+
+            // with n number of steps available calculate how many bits one should flip
+            // given the length of the resolution and assuming its fully obfuscated
+            let bits = Math.round(this.bitmap.resolution.length / steps);
+
+            // duration sent to task runner is 0 or falsy so that no matter what the reveal
+            // will complete, either at a pace set to match the requested duration or
+            // at the default speed in options
+            this.taskRunner.addSingleRun(this.revealStrategy, 0, this.options.frequency, bits);
+        }, delay);
     }
 }

@@ -18,10 +18,10 @@ export default class TaskRunner {
         // this.queue.forEach(task => { task.frequency = frequency; } );
     }
 
-    add(strategyGenerator, duration = 0, delay = 0, frequency = this.frequency) {
+    add(strategyGenerator, duration = 0, delay = 0, frequency = this.frequency, bits = 1) {
         this.queue.push(new Task({
             displayName: strategyGenerator.displayName,
-            generator: strategyGenerator(this.bitmap),
+            generator: strategyGenerator(this.bitmap, bits),
             listener: this.update.bind(this),
             duration,
             delay,
@@ -36,8 +36,8 @@ export default class TaskRunner {
         return this;
     }
 
-    addSingleRun(strategyGenerator, delay, frequency) {
-        this.add(strategyGenerator, false, delay, frequency);
+    addSingleRun(strategyGenerator, delay, frequency, bits) {
+        this.add(strategyGenerator, false, delay, frequency, bits);
         return this;
     }
 
