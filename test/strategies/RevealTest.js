@@ -37,6 +37,15 @@ describe('Reveal', () =>{
             step = generator.next();
             assert(step.value.join('').match(/1/g) === null, 'second step reveals all');
             assert(step.done === true, 'since all is revealed, we are now done');
+        });
+
+        it('should return a fully revealed array if n is larger than the array', () => {
+            let testArray = [1, 1, 1];
+            let generator = Reveal.nBitsAndShuffleUntilDone(testArray, 4);
+            let step = generator.next();
+
+            assert(step.value.join('').match(/1/g) === null);
+            assert(step.done === true);
         })
     });
 
