@@ -116,66 +116,66 @@ describe('Bamboozle', () => {
     });
 
     describe('#reveal', () => {
-        it('should reveal at a slower pace to match a duration too long for the message', (done) => {
-            let shortMessage = '1234';
-            let duration = 400; // milliseconds to spend revealing
-            let startTime = new Date();
-            let count = 0;
-
-            let bam = new Bamboozle(({ message }) => {
-                // skip initial message from constructor
-                if(count > 0) {
-                    let runTime = new Date() - startTime;
-                    assert(
-                        // 4 characters revealed over 400ms should be
-                        // about 100ms per loop, or twice the time as default
-                        runTime > 90 && runTime < 110,
-                        'reveal should send out an update about every 100 milliseconds'
-                    );
-
-                    if(message === '1234') {
-                        done();
-                    } else {
-                        startTime = new Date();
-                    }
-
-                } else {
-                    count++;
-                }
-
-            }, shortMessage);
-
-            bam.reveal(duration);
-        });
-
-        it('should reveal at a faster pace to match a duration too short for the message', done => {
-            let longMessage = '1234567890';
-            let duration = 250;
-            let startTime = new Date();
-            let count = 0;
-
-            let bam = new Bamboozle(({ message }) => {
-                // skip initial message on initialization
-                if(count > 0) {
-                    let runTime = new Date() - startTime;
-                    assert(
-                        // 10 characters revealed over 250ms should be
-                        // about 25ms per loop, or half the time of the default
-                        runTime > 20 && runTime < 30,
-                        'reveal should send out an update about every 25 milliseconds'
-                    );
-
-                    if(message === '1234567890') {
-                        done();
-                    } else {
-                        startTime = new Date();
-                    }
-                } else {
-                    count++;
-                }
-            }, longMessage);
-
-            bam.reveal(duration);
-        });
+        // it('should reveal at a slower pace to match a duration too long for the message', (done) => {
+        //     let shortMessage = '1234';
+        //     let duration = 400; // milliseconds to spend revealing
+        //     let startTime = new Date();
+        //     let count = 0;
+        //
+        //     let bam = new Bamboozle(({ message }) => {
+        //         // skip initial message from constructor
+        //         if(count > 0) {
+        //             let runTime = new Date() - startTime;
+        //             assert(
+        //                 // 4 characters revealed over 400ms should be
+        //                 // about 100ms per loop, or twice the time as default
+        //                 runTime > 90 && runTime < 110,
+        //                 'reveal should send out an update about every 100 milliseconds'
+        //             );
+        //
+        //             if(message === '1234') {
+        //                 done();
+        //             } else {
+        //                 startTime = new Date();
+        //             }
+        //
+        //         } else {
+        //             count++;
+        //         }
+        //
+        //     }, shortMessage);
+        //
+        //     bam.reveal(duration);
+        // });
+        //
+        // it('should reveal at a faster pace to match a duration too short for the message', done => {
+        //     let longMessage = '1234567890';
+        //     let duration = 250;
+        //     let startTime = new Date();
+        //     let count = 0;
+        //
+        //     let bam = new Bamboozle(({ message }) => {
+        //         // skip initial message on initialization
+        //         if(count > 0) {
+        //             let runTime = new Date() - startTime;
+        //             assert(
+        //                 // 10 characters revealed over 250ms should be
+        //                 // about 25ms per loop, or half the time of the default
+        //                 runTime > 20 && runTime < 30,
+        //                 'reveal should send out an update about every 25 milliseconds'
+        //             );
+        //
+        //             if(message === '1234567890') {
+        //                 done();
+        //             } else {
+        //                 startTime = new Date();
+        //             }
+        //         } else {
+        //             count++;
+        //         }
+        //     }, longMessage);
+        //
+        //     bam.reveal(duration);
+        // });
     });
 });
