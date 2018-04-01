@@ -1,9 +1,11 @@
 {
   "name": "bamboozle",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "An es6 rewrite of @camweigert's baffle--reveals and obfuscates straight text instead of DOM",
   "main": "dist/bamboozle.min.js",
-  "files": ["dist/bamboozle.min.js"],
+  "files": [
+    "dist/bamboozle.min.js"
+  ],
   "scripts": {
     "build": "webpack -p",
     "test": "mocha --compilers js:babel-core/register test/*",
