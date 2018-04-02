@@ -9,7 +9,10 @@
   "scripts": {
     "build": "webpack -p",
     "test": "mocha --compilers js:babel-core/register --recursive",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "preversion": "npm run test",
+    "version" : "npm run build && git add dist/",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
