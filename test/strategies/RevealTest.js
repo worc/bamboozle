@@ -121,7 +121,7 @@ describe('Reveal', () =>{
             assert(done);
         });
 
-        it('should flip bits from the edges towardsthe center for even-length arrays', () => {
+        it('should flip bits from the edges towards the center for even-length arrays', () => {
             let testArray = [1, 1, 1, 1];
             let generator = Reveal.outsideToInside(testArray);
             let value, done;
