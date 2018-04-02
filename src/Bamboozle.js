@@ -60,7 +60,7 @@ export default class Bamboozle {
 
     }
 
-    reveal(duration = 0, delay) {
+    reveal(duration = 0, delay = 0) {
         setTimeout(() => {
             this.stop();
 
@@ -76,7 +76,8 @@ export default class Bamboozle {
 
             // with n number of steps available calculate how many bits one should flip
             // given the length of the resolution and assuming its fully obfuscated
-            let bits = Math.round(this.bitmap.resolution.length / steps);
+            // also if it rounds to zero, just use 1 bit and call it a day
+            let bits = Math.max(Math.round(this.bitmap.resolution.length / steps), 1);
 
             // duration sent to task runner is 0 or falsy so that no matter what the reveal
             // will complete, either at a pace set to match the requested duration or
