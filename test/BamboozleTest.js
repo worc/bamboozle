@@ -116,6 +116,36 @@ describe('Bamboozle', () => {
     });
 
     describe('#reveal', () => {
+        it('should reveal at least one bit per cycle, even when duration is too long for the message', (done) => {
+            let shortMessage = '1234';
+            let duration = 1000; //
+            let startTime = new Date();
+            let count = 0;
+
+            // reveal will the default frequency and the duration and determine how many steps to take to be on time
+            // in this case there are 20 steps (since we're using a duration of 1000 and the default frequency is already 20)
+            // then reveal divides the length of the message by the number of steps to see if we should reveal more than one bit at a time
+            // and then rounds the result to the nearest integer
+            // but since the steps are larger than the message we get a fraction and round to zero
+            // the current fix is to set a floor of one-bit-per-cycle, even though this throws off the timing
+            // so in this case even with a duration of 1000, we should complete this reveal in four steps
+            // and only take 200ms give or take
+
+            let bam = new Bamboozle(({ message }) => {
+                // skip initial message from constructor
+                if(count === 4) {
+                    let runTime = new Date() - startTime;
+                    console.log('count', count, 'message', message);
+                    assert(message === shortMessage, `last message was ${message}`);
+                    assert(runTime > 180 && runTime < 220, `run time was: ${runTime}`);
+                    done();
+                }
+
+                count++;
+            }, shortMessage);
+
+            bam.reveal(duration);
+        });
         // it('should reveal at a slower pace to match a duration too long for the message', (done) => {
         //     let shortMessage = '1234';
         //     let duration = 400; // milliseconds to spend revealing
