@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build": "webpack -p",
+    "dry": "npm publish . --dry-run",
     "test": "mocha --require @babel/register --recursive",
     "watch": "webpack --watch",
     "preversion": "npm run test",
