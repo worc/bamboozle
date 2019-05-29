@@ -1,6 +1,6 @@
 {
   "name": "bamboozle",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An es6 rewrite of @camweigert's baffle--reveals and obfuscates straight text instead of DOM",
   "main": "dist/bamboozle.min.js",
   "files": [
