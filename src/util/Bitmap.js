@@ -24,8 +24,9 @@ export default class Bitmap /*extends Array*/ {
      * we're stuck aliasing the usual API calls to a local array
      * instead of just extending the array prototype...
      *
-     * at least until babel 7 drops
+     * at least until these issues are resolved
      * https://github.com/babel/babel/pull/7081
+     * https://github.com/babel/babel/pull/8656
      *
      */
     every(fn) {

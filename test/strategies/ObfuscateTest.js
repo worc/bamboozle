@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import Obfuscate from '../../src/strategies/Obfuscate';
 
 describe('Obfuscate', () => {

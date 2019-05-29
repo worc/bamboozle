@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import Reveal from '../../src/strategies/Reveal.js';
 
 describe('Reveal', () =>{

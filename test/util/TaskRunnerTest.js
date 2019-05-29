@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import TaskRunner from '../../src/util/TaskRunner';
 import Bitmap from '../../src/util/Bitmap';
 

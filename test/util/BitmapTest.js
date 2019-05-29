@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import Bitmap from '../../src/util/Bitmap';
 
 const testResolution = 'hello world!';
