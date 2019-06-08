@@ -47,7 +47,6 @@ export default class TaskRunner {
             this.activeTask = this.queue.shift();
             this.activeTask.run().then(this.play.bind(this));
         }
-        console.log('no tasks left');
     }
 
     stop() {
