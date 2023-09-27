@@ -1,23 +1,53 @@
 import ShuffledDeckGenerator from './ShuffledDeckGenerator';
 
-// todo upgrade to babel 7, extend Array
-export default class Bitmap /*extends Array*/ {
+type Bit = 0 | 1
+
+interface Options extends Record<string, unknown> {
+  characters: string,
+  exclude: string,
+  resolution: string,
+}
+
+type BitmapBooleanCallback = (value: Bit, index: number, array: Array<Bit>) => boolean;
+type BitmapVoidCallback = (value: Bit, index: number, array: Array<Bit>) => void;
+
+interface Bitmap {
+  array: Array<Bit>,
+  resolution: string,
+  exclude: string,
+  characterGenerator: Generator<string, never, IteratorYieldResult<string>>,
+
+  setOptions(options: Options): void,
+  setBitmap(bitmap: Array<Bit>): void,
+  every(fn: BitmapBooleanCallback): boolean,
+  fill(value: Bit): void,
+  includes(value: Bit): boolean,
+  forEach(fn: BitmapVoidCallback): void,
+  concat(value: Bit | Array<Bit>): void,
+  includes(value: Bit): boolean,
+  render() : string,
+}
+
+class Bitmap implements Bitmap /*extends Array*/ {
     constructor(resolution = '', exclude = '', characters = '') {
         this.array = Array(resolution.length).fill(0);
         this.resolution = resolution;
         this.exclude = exclude;
-        this.characterGenerator = ShuffledDeckGenerator(characters.split(''));
+        this.characterGenerator = ShuffledDeckGenerator<string>(characters.split(''));
     }
 
-    setOptions({ exclude, characters }) {
+    setOptions(options: Options) {
+      const { exclude, characters } = options;
+      this.resolution = options.resolution;
+      this.exclude = exclude;
         this.exclude = exclude;
         this.characterGenerator = ShuffledDeckGenerator(characters.split(''));
     }
 
     // can't really do operator overloading, so this will stay in use
     // even after the jump to babel 7 when we'll extend Array
-    setBitmap(bitmap = []) {
-        this.array = bitmap;
+    setBitmap(bitmap?:  Array<Bit>) {
+        this.array = bitmap ?? [];
     }
 
     /*
@@ -29,11 +59,11 @@ export default class Bitmap /*extends Array*/ {
      * https://github.com/babel/babel/pull/8656
      *
      */
-    every(fn) {
+    every(fn: BitmapBooleanCallback) {
         return this.array.every(fn);
     }
 
-    fill(value) {
+    fill(value: Bit) {
         this.array.fill(value);
     }
 
@@ -41,15 +71,15 @@ export default class Bitmap /*extends Array*/ {
         return this.array.length;
     }
 
-    forEach(fn) {
+    forEach(fn: BitmapVoidCallback) {
         return this.array.forEach(fn);
     }
 
-    concat(fn) {
-        return this.array.concat(fn);
+    concat(value:  Bit | Array<Bit>) {
+        return this.array.concat(value);
     }
 
-    includes(value) {
+    includes(value: Bit) {
         return this.array.includes(value);
     }
 
@@ -62,3 +92,5 @@ export default class Bitmap /*extends Array*/ {
         }).join('');
     }
 }
+
+export default Bitmap
